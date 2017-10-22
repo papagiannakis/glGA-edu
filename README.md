@@ -1,4 +1,7 @@
-glGA Geometric Application framework for modern Shader-Based OpenGL
+glGA: graphics library for Geometric Applications 
+an open framework for modern, Shader-Based OpenGL and VR
+-----------------------------------------
+
 @Copyright George Papagiannakis, 2012-2017, University of Crete & FORTH
 License is provided in the license.txt
 
