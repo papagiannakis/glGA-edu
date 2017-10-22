@@ -1,7 +1,7 @@
 glGA: graphics library for Geometric Applications 
 -----------------------------------------
 
-an open framework for modern, Shader-Based OpenGL and VR,
+an open framework for modern, Shader-Based OpenGL, VR and Geometric Algebra computer graphics applications
 @Copyright George Papagiannakis, 2012-2017, University of Crete & FORTH,
 License is provided in the license.txt
 
@@ -14,21 +14,21 @@ glGA page: http://george.papagiannakis.org/?page_id=513
 
 Main glGA contributors
 -----------------------------------------
-Papagiannakis   	George
-Papanikolaou    	Petros
-Greassidou      	Elisavet
-Georgiou        	Stylianos
-Kateros         	        Stavros
-Lydatakis       	        Nikolaos
-Zikas                       Paul
-Bachlitzanakis        Vasilis
-Papaefthymiou   	Margarita
-Kanakis                 Marios
-Geronikolakis		Stratos
+- Papagiannakis   	George,
+- Papanikolaou    	Petros,
+- Greassidou      	Elisavet,
+- Georgiou        	Stylianos,
+- Kateros         	Stavros,
+- Lydatakis       	Nikolaos,
+- Zikas             Paul,
+- Bachlitzanakis    Vasilis,
+- Papaefthymiou   	Margarita,
+- Kanakis           Marios,
+- Geronikolakis		Stratos
 
 Release notes:
 -----------------------------------------
-- Version glGA5.0
+- Version 5.0
 
 Novelties include:
 - new Shader types: Compute, Geometry, Tesselation shaders
@@ -42,7 +42,7 @@ Dependencies on all required third-party, open-source, freely available, multi-p
 
 glGA libraries and provided examples
 ----------------------------------
-1.  glGAMath - mathematics for graphics and geometric algebra algorithms
+1.  glGAMath - mathematics for graphics and geometric algebra (GA) algorithms
 2.  glGA - main library
 3.  basicWindow - simple empty window and OpenGL context
 4.  basicCube - simple 3D cube with color per vertex
@@ -65,7 +65,7 @@ We employ the ASSIMP third-party 3D asset loading library so almost all standard
 # Building glGAframework with the use of CMake or CMake GUI.
 
 # General Information/Requirements.
-============================================================
+============================================================.
 Hardware: 
   * OpenGL 3.2 or higher .
 Software:
@@ -77,8 +77,8 @@ Software:
 * CMake Minimum version required 3.5
 Download the latest one for your platform from : https://cmake.org/download/
 
-# OSX
-============================================================
+# OSX.
+============================================================.
 Tested with OSX High Sierra, Sierra, El Capitan, Yosemite and Xcode 9, 8, 7 and 6.
 
 Step 1
