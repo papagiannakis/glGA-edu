@@ -28,6 +28,7 @@ Release notes:
 - Version glGA5.0
 
 Novelties include:
+- new Shader types: Compute, Geometry, Tesselation shaders
 - OpenVR support, ImGUI, SDL2, dual quaternion, euclidean GA and Conformal GA animation blending and skinning
 
 This is a keep-it-simple, but powerful & versatile C++11 openGL Geometric Applications framework for GPU shader-based computer graphics development for Windows and MacOSX-Linux & iOS mobile platforms utilizing modern GPUs.
