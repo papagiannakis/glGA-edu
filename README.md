@@ -15,12 +15,12 @@ Papagiannakis   	George
 Papanikolaou    	Petros
 Greassidou      	Elisavet
 Georgiou        	Stylianos
-Kateros         	Stavros
-Lydatakis       	Nikolaos
-Zikas               Paul
-Bachlitzanakis Vasilis
+Kateros         	        Stavros
+Lydatakis       	        Nikolaos
+Zikas                       Paul
+Bachlitzanakis        Vasilis
 Papaefthymiou   	Margarita
-Kanakis             Marios
+Kanakis                 Marios
 Geronikolakis		Stratos
 
 Release notes:
@@ -28,7 +28,7 @@ Release notes:
 - Version glGA5.0
 
 Novelties include:
-- dual quaternion, euclidean GA and Conformal GA animation blending and skinning
+- OpenVR support, ImGUI, SDL2, dual quaternion, euclidean GA and Conformal GA animation blending and skinning
 
 This is a keep-it-simple, but powerful & versatile C++11 openGL Geometric Applications framework for GPU shader-based computer graphics development for Windows and MacOSX-Linux & iOS mobile platforms utilizing modern GPUs.
 
@@ -49,17 +49,13 @@ glGA libraries and provided examples
 9.  basicTesselation - Tesselation shader example, control inner and outer Tesselation levels
 10. basicCubeOpenVR - simple 3D cube in VR with OpenVR api (Windows only)
 
-EXTRA THIRD PARTY LIBRARIES AND 3D CONTENT TO TEST WITH
--------------------------------------------------------------------------------
-
-- glGAFramework with basic Examples: https://www.dropbox.com/s/ehe6lz21ftu5tvj/glGA-5.0.zip?dl=0
-- _glGA-data:			             https://www.dropbox.com/s/06p91q19bmd1qyw/_glGA-data.zip?dl=0
 
 CONTENT CREATION 
 ---------------------------------------------------------------------------
-Open format, COLLADA 3D standard based 3D asset creation and exchange:
-Content Creation Tools: Autodesk Maya free for educational purposes (http://www.autodesk.com/education/home) or Google sketchup
-COLLADA format exporters for the above tools: Open-Collada (https://github.com/KhronosGroup/OpenCOLLADA) or the FBX exporter (http://www.autodesk.com/products/fbx/overview) for COLLADA
+Open format, COLLADA/FBX 3D standard based 3D asset creation and exchange:
+Content Creation Tools: Autodesk Maya free for educational purposes (http://www.autodesk.com/education/home) or Google sketchup.
+COLLADA format exporters for the above tools: Open-Collada (https://github.com/KhronosGroup/OpenCOLLADA) or the FBX exporter (http://www.autodesk.com/products/fbx/overview) for COLLADA.
+We employ the ASSIMP third-party 3D asset loading library so almost all standard 3D file formats are also supported.
 
 
 # Building glGAframework with the use of CMake or CMake GUI.
@@ -67,10 +63,10 @@ COLLADA format exporters for the above tools: Open-Collada (https://github.com/K
 # General Information/Requirements.
 ============================================================
 Hardware: 
-  * OpenGL 3.2 .
+  * OpenGL 3.2 or higher .
 Software:
   * Tested with Windows 10 , Visual Studio Community 15
-  * Tested with OSX El Capitan, XCode 8
+  * Tested with OSX: High Sierra, Sierra, El Capitan, XCode 8, 9
   * Tested with Ubuntu 16.04 LTS
 	Note: Will work with older software but it's better with new!
 
@@ -79,7 +75,7 @@ Download the latest one for your platform from : https://cmake.org/download/
 
 # OSX
 ============================================================
-Tested with OSX Sierra, El Capitan, Yosemite and Xcode 8, 7 and 6.
+Tested with OSX High Sierra, Sierra, El Capitan, Yosemite and Xcode 9, 8, 7 and 6.
 
 Step 1
 ----------------
