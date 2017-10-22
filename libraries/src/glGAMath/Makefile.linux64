@@ -1,0 +1,41 @@
+# source files.
+SRC =  	e3ga.cpp e3ga_util.cpp glGAMath.cpp
+ 
+OBJ = $(SRC:.cpp=.o)
+ 
+OUT = ../../lib/Linux/libglGAMath.a
+ 
+# include directories
+INCLUDES = -I/usr/include/ImageMagick -I../../include -I../../include/glGAMath -I../../../_thirdPartyLibs/include -I../../../_thirdPartyLibs/include/glm -I../../../_thirdPartyLibs/include/glew -I../../../_thirdPartyLibs/include/glm -I../../../_thirdPartyLibs/include/glfw -I../../../_thirdPartyLibs/include/Assimp
+ 
+# C++ compiler flags (-g -O2 -Wall)
+CCFLAGS = -g 
+ 
+# compiler
+CCC = g++
+ 
+# library paths
+LIBS = -l../../_thirdPartyLibs/lib/Linux/libGLEW.a -l../../_thirdPartyLibs/lib/Linux/libglfw.a -lstdc++ -lGL -lX11 -lXxf86vm -lXrandr -lpthread -lXi -lm -lrt -lXcursor -lMagick++ -lMagickCore
+ 
+# compile flags
+LDFLAGS = -g
+ 
+.SUFFIXES: .cpp
+ 
+#default: dep $(OUT)
+ 
+.cpp.o:
+	$(CCC) $(INCLUDES) $(CCFLAGS) -c $< -o $@
+ 
+$(OUT): $(OBJ)
+	ar rcs $(OUT) $(OBJ)
+ 
+depend: dep
+ 
+dep:
+	makedepend -f Makefile.linux64 -- $(CFLAGS) -- $(INCLUDES) $(SRC)
+ 
+clean:
+	rm -f $(OBJ) $(OUT) Makefile.linux64.bak
+
+

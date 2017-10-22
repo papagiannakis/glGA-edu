@@ -1,0 +1,55 @@
+LICENSING AND DISTRIBUTION TERMS 
+________________________________
+FORTH glGA Framework 
+
+PLEASE READ THE FOLLOWING CAREFULLY BEFORE DOWNLOADING:   
+
+By accepting this license you expressly acknowledge and agree, on your own behalf as an individual, and on behalf of your employer or another entity which has not yet done so (collectively "You" or "Your"), that You are entering into a legal agreement with FORTH and its affiliates ("FORTH"), have full authority to bind such employer or other entity, and have understood and agree to comply with the terms below ("Terms").  You hereby waive any applicable rights to require an original (non-electronic) signature or delivery or retention of non-electronic records, to the extent not prohibited under applicable law.
+
+1. Licenses
+Subject to these Terms, FORTH hereby grants to You a limited, worldwide (subject to applicable export restrictions), non-exclusive, personal, non-transferable, revocable, license to use the FORTH proprietary three-dimensional glGA Framework demonstration application ("glGA Framework") for the purpose of evaluating and demonstrating the capabilities of the "glGA Framework" pursuant to this end-user license agreement with FORTH ("EULA"). 
+
+2. Restrictions
+a. You agree to use the "glGA Framework" only as permitted above.
+b. You are not allowed utilizing the "glGA Framework" with content that is not appropriate for viewing by a general audience or that directs users to such content, which includes, without limitation, that which: (a) promotes pornography and/or adult sexual, obscene, hate, or otherwise offensive or illegal content; (b) promotes violence or use of illegal substances; (c) promotes discrimination based on race, sex, religion, nationality, disability, sexual orientation or age; (d) violates any law, statute, ordinance, or regulation, is libelous, or promotes hate, crime or other illegal activities; (e) otherwise violates intellectual property rights; (f) results in legal liability for FORTH; and/or (g) is considered by FORTH, in its discretion, to compete directly or indirectly with the "glGA Framework". 
+c. You shall not (and shall not permit third parties to): (a) integrate the "glGA Framework" with any products; (b) distribute the "glGA Framework" in any manner; (c) use or make available the "glGA Framework" pursuant to an open source license; (d) modify the "glGA Framework"; or (e) change, obscure or delete any proprietary notices or legends which appear in the "glGA Framework".  You understand and agree that under no circumstances will You (or will You allow distributors, resellers or agents to) distribute stand-alone copies or versions of the "glGA Framework".
+d. You agree that You will not, directly or indirectly, and You shall not permit third parties to (a) decompile, disassemble or reverse engineer the "glGA Framework", in whole or in part, or use, copy, reproduce, write or develop any derivative software or any other software program based upon all or any part of the "glGA Framework" or any confidential information of FORTH, without FORTH's express prior written consent; (b) use the "glGA Framework" directly or indirectly, to develop software having the same or substantially similar functional characteristics as those contained in the "glGA Framework"; (c) not compete with FORTH in the sale or license of the "glGA Framework" and/or the Authorized Hardware; and (d) not provide software maintenance or consulting services in respect of the "glGA Framework".  In the event applicable law grants You the right to reverse engineer, You shall provide FORTH with prior written notice including information sufficient regarding Your intended method of reverse engineering, its purpose and the legal authority for such activity and shall afford FORTH a reasonable period before initiating such activity in order to evaluate and/or legally challenge the activity.  You shall refrain from such activity until such time as any legal challenge is resolved in Your favor.  Reverse engineering includes, without limitation, sniffing, decompiling,or otherwise deriving source code.
+
+3. Intellectual Property Ownership
+FORTH and/or its licensors shall retain all right, title and interest, including all intellectual property rights, in and to the FORTH Logos, as well as the "glGA Framework" including all improvements, modifications, enhancements, and derivative works thereof and feedback that You provide associated therewith, regardless of whether created by FORTH or You.  All rights not specifically granted in these Terms shall be retained by FORTH.    
+
+4. Warranties
+You represent and warrant that: (a) You have the full right, power and authority to enter into these Terms and carry out Your obligations hereunder; (b) the consent to and performance of these Terms will not result in the breach or violation of any law or regulation applicable to it or any contract or commitment by which You are bound; and (c) You do not infringe any rights of a third party.
+
+5. User Support
+FORTH shall not be required to provide support of any kind with respect to the "glGA Framework".  
+
+6. Disclaimer of Warranties 
+THE "glGA Framework", SOFTWARE ARE DEEMED ACCEPTED BY YOU.  TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, FORTH, ITS AFFILIATES, LICENSORS AND SUPPLIERS PROVIDE THE SOFTWARE AND ANY (IF ANY) SUPPORT SERVICES "AS IS" AND WITHOUT LIABILITY. TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, FORTH EXPRESSLY DISCLAIMS ANY IMPLIED WARRANTIES AND CONDITIONS, INCLUDING WITHOUT LIMITATION IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE OR NON-INFRINGEMENT AS WELL AS ANY WARRANTIES THAT THE OPERATION OF THE SOFTWARE OR DRIVERS WILL BE UNINTERRUPTED OR ERROR FREE.
+
+7. Indemnity
+You agree to indemnify and hold FORTH and its officers, directors, employees, agents, and affiliates harmless against any cost, loss, liability or expense (including attorneys' fees) arising out of any third party claims against FORTH (i) relating to Your utilization of the "glGA Framework" and (ii) arising from Your acts or omissions.
+
+8. Term.  
+These Terms shall become effective upon Your acceptance thereof and shall remain in effect until terminated by FORTH. Upon termination of these Terms, (a) the rights and licenses granted to You pursuant to these Terms shall automatically terminate; (b) You shall certify to FORTH that the "glGA Framework" subject to these Terms have been removed from Your equipment and premises (c) You shall cease to use all intellectual property of FORTH.  
+
+9. Survival.
+The provisions of Sections 2-12 shall survive the expiration or termination of these Terms for any reason.
+
+10. Exclusion of Incidental, Consequential and certain other Damages. 
+To the maximum extent permitted by applicable law, in no event shall FORTH, its affiliates, licensors or its suppliers be liable for any special, incidental, indirect, or consequential damages whatsoever (including, but not limited to, damages for loss of profits or confidential or other information, for business interruption, for personal injury, for loss of privacy, for failure to meet any duty including of good faith or of reasonable care, for negligence, and for any other pecuniary or other loss whatsoever) arising out of or in any way related to the use of or inability to use the "glGA Framework", or otherwise under or in connection with any provision of these Terms, even in the event of the fault, tort (including negligence), strict liability, breach of contract or breach of warranty of FORTH, its affiliates, licensors or any supplier, and even if they or any one of them has been advised of the possibility of such damages. Because some jurisdictions do not allow such exclusions or limitations, the above may not apply.
+
+11. Limitation of Liability and Remedies
+Notwithstanding anything to the contrary contained herein or any damages that You might incur for any reason whatsoever, the entire and maximum liability of FORTH, its affiliates, licensors and any suppliers, in aggregate for all claims made in contract, tort or otherwise in connection with the subject matter hereof, and Your exclusive remedy for all of the foregoing shall be limited to the fees actually paid by You, if any.  The foregoing limitations, exclusions and disclaimers shall apply to the maximum extent permitted by applicable law, even if any remedy fails its essential purpose.
+
+12. Miscellaneous
+a. Governing Law; Attorneys Fees. These Terms shall be construed and controlled by the Greek Law, and You consent to the non-exclusive jurisdiction and venue of the Greek courts of Heraklion Crete, provided that FORTH may seek immediate injunctive or other relief with respect to a violation of intellectual property rights or confidentiality obligations in any appropriate jurisdiction, and You waive all defenses of lack of personal jurisdiction and forum non convenient.  EACH OF THE PARTIES HERETO HEREBY IRREVOCABLY WAIVES ALL RIGHT TO TRIAL BY JURY.
+b. Assignment. You may not assign these Terms or any portion thereof to any third party unless FORTH expressly consents in writing.
+c. No Partnership.  Nothing in these Terms shall be construed to create a partnership or agency between the parties, and neither shall have authority to bind or represent itself as the agent or partner of the other.
+d. Severability.  If any provision of these Terms shall be held to be invalid, illegal or unenforceable, such holding shall in no way affect or impair the remaining provisions, and the parties shall use their reasonable efforts to substitute valid and enforceable provisions which have the closest meaning and purpose as those so held.
+e. Entire Agreement; Variation; Waiver; Counterparts. These Terms set forth the entire understanding of the parties, which supersedes and merges all prior proposals, understandings and all other agreements oral and written between the parties relating to the subject matter herein and may not be modified except in a writing executed by both parties or in new terms posted here or notified to You. Failure of a party to enforce any of the provisions of these Terms will not be construed to be a waiver of the provision, and no waiver of any rights hereunder shall be deemed to be a waiver of the same or other right on any other occasion.
+
+� Copyright FORTH 2014.  All rights reserved.
+
+
+

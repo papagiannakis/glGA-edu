@@ -1,0 +1,142 @@
+/*
+* Copyright 2006 Sony Computer Entertainment Inc.
+*
+* Licensed under the MIT Open Source License, for details please see license.txt or the website
+* http://www.opensource.org/licenses/mit-license.php
+*
+*/ 
+float4x4 WorldITXf:WorldInverseTranspose;
+float4x4 WorldViewProjXf:WorldViewProjection;
+float4x4 WorldXf:World;
+
+
+
+float3 LiteColor:Diffuse<
+string UIName="Bright Surface Color";
+string UIWidget="Color";
+> ={0.5f,0.0f,0.5f};
+
+float3 DarkColor:Diffuse<
+string UIName="Dark Surface Color";
+string UIWidget="Color";
+> ={0.0f,0.0f,0.0f};
+
+float3 WarmColor:Diffuse<
+string UIName="Gooch warm tone";
+string UIWidget="Color";
+> ={0.5f,0.5f,0.0f};
+
+float3 CoolColor:Diffuse<
+string UIName="Gooch cool tone";
+string UIWidget="Color";
+> ={0.0f,0.0f,0.0f};
+
+float4 LightPos:LightPosition<
+string Object="PointLight";
+string UIName="Lamp Position";
+string Space="World";
+> ={100.0f,100.0f,100.0f,0.0f};
+
+
+
+
+
+
+sampler2D ColorSampler;
+
+
+
+float Timer:Time<string UIWidget="None";> ;
+
+float Amplitude<
+string UIWidget="slider";
+float UIMin=0.001000000047;
+float UIMax=2;
+float UIStep=0.001099999994;
+> =0.03579999879f;
+
+float Frequency<
+string UIWidget="slider";
+float UIMin=0.001000000047;
+float UIMax=1.0;
+float UIStep=0.009999999776;
+> =0.09059999883;
+
+
+
+
+
+struct appdata
+{
+float3 Position:POSITION;
+float4 Normal:NORMAL;
+float4 UV:TEXCOORD0;
+};
+
+struct vertexOutput
+{
+float4 HPosition:POSITION;
+float4 diffCol:COLOR0;
+float2 UV:TEXCOORD0;
+};
+
+
+
+
+
+vertexOutput wtdVS(appdata IN)
+{
+vertexOutput OUT;
+float3 Nn=normalize(mul(WorldITXf,IN.Normal).xyz);
+
+float4 Po=float4(IN.Position.xyz,1);
+float axis=Po.x/Frequency+Timer;
+
+
+float wiggleY=cos(axis)*Amplitude;
+Nn.y=Nn.y+wiggleY;
+Nn=normalize(Nn);
+
+Po.y=Po.y+wiggleY;
+
+
+
+float3 Pw=mul(WorldXf,Po).xyz;
+float3 Ln=normalize(LightPos-Pw).xyz;
+float3 Un=float3(0,1,0);
+float mixerLight=0.5*(dot(Ln,Nn)+1.0);
+float mixerUp=0.5*(dot(Un,Nn)+1.0);
+float3 surfColor=lerp(DarkColor,LiteColor,mixerLight);
+float3 toneColor=lerp(CoolColor,WarmColor,mixerUp);
+float wrapx=abs(IN.UV.x-0.5);
+float wrapy=abs(IN.UV.y-0.5);
+
+float3 texColor=float3(0,wrapx,wrapy);
+texColor=float3(0,wrapy,wrapy);
+float3 mixColor=surfColor+toneColor+texColor;
+OUT.diffCol=float4(mixColor.xyz,1.0f);
+OUT.HPosition=mul(WorldViewProjXf,Po);
+OUT.UV=IN.UV.xy;
+return OUT;
+}
+
+float4 wtdFS(vertexOutput IN):COLOR
+{
+float4 map=tex2D(ColorSampler,IN.UV.xy);
+float4 surf=IN.diffCol;
+float grey=(map.x+map.y+map.z)/3.0f;
+return float4(0.5f*grey)+(0.5f*surf);
+
+return IN.diffCol;
+}
+
+
+
+
+
+
+
+
+
+
+
