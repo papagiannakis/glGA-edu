@@ -55,7 +55,7 @@ glGA libraries and provided examples
 
 
 CONTENT CREATION 
----------------------------------------------------------------------------
+----------------------------------
 Open format, COLLADA/FBX 3D standard based 3D asset creation and exchange:
 Content Creation Tools: Autodesk Maya free for educational purposes (http://www.autodesk.com/education/home) or Google sketchup.
 COLLADA format exporters for the above tools: Open-Collada (https://github.com/KhronosGroup/OpenCOLLADA) or the FBX exporter (http://www.autodesk.com/products/fbx/overview) for COLLADA.
@@ -65,7 +65,7 @@ We employ the ASSIMP third-party 3D asset loading library so almost all standard
 # Building glGAframework with the use of CMake or CMake GUI.
 
 # General Information/Requirements.
-============================================================.
+----------------------------------
 Hardware: 
   * OpenGL 3.2 or higher .
 Software:
@@ -78,7 +78,7 @@ Software:
 Download the latest one for your platform from : https://cmake.org/download/
 
 # OSX.
-============================================================.
+----------------------------------
 Tested with OSX High Sierra, Sierra, El Capitan, Yosemite and Xcode 9, 8, 7 and 6.
 
 Step 1
@@ -110,15 +110,11 @@ Install macports (download it from : https://www.macports.org/)
 
 then open up a terminal and type: sudo port install boost
 
-Step 4 (OpenCV Library)
+Step 4 (OpenCV and Boost Libraries)
 ----------------
-Download the OpenCV Library (Tested with version 3.2). Link: http://www.opencv.org/opencv-3-2.html
-
-Unzip the folder and navigate to the folder opencv-3.2.0 (cd opencv-3.2.0).
-
-Execute the following commands (In a terminal):     1. mkdir build     2. cd build     3. cmake -G "Unix Makefiles" ..     4. make -j8     5. sudo make install
-You have successfully installed OpenCV.
-
+use macports to install OpenCV and Boost libraries
+- sudo port install opencv
+- sudo port install boost
 
 Step 5
 ----------------
