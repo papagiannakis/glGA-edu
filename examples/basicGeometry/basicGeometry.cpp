@@ -317,7 +317,28 @@ void	displayGui()
 	//Sets the Window size
 	//ImGui::SetNextWindowSize(ImVec2(400, 160), ImGuiSetCond_FirstUseEver);
 	//ImGui::SetNextWindowPos(ImVec2(10, 0));
-
+    //Calculate FPS
+    static bool firstTime = false;
+    static int  frames = 0;
+    static double start_time = 0;
+    static float fps = 0.0f;
+    float passed_time = ImGui::GetTime();
+    
+    if(!firstTime){
+        frames = 0;
+        start_time = passed_time;
+        firstTime = true;
+    }
+    
+    frames++;
+    
+    if( ((passed_time - start_time) > 0.25) && (frames > 10)){
+        fps = (double) (frames / (passed_time - start_time));
+        start_time = passed_time;
+        frames = 0;
+    }
+    
+    
 	ImGui::Begin("basicGeometry GUI");
 	static float f = 0.0f;
 
@@ -352,7 +373,7 @@ void	displayGui()
 		}
 	}
 
-	ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+	ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / fps, fps);
 	ImGui::End();
 }
 
