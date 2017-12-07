@@ -53,55 +53,38 @@ void RigMesh::VertexBoneData::addBoneData(uint boneID, float weight)
             return;
         }
     }//end for
-    
+
     // should not reach here - means we have more bones than allocated space
-    assert(0);
+    assert(false);
 }
 
-RigMesh::RigMesh()
-{
-    m_NumBones = 0;
-    m_pScene = NULL;
-    m_Textures.clear();
-    m_Textures.resize(0);
-    m_GAfactorDenominator = 1.0;
-    initialTransformation = mat4(1.0);
-}
-
-RigMesh::~RigMesh()
-{
-    clear();
-}
+RigMesh::RigMesh() : initialTransformation(mat4(1.0)), m_NumBones(0), m_GAfactorDenominator(1.0), m_pScene(nullptr) {}
 
 void RigMesh::clear()
 {
-    for (unsigned int i=0; i<m_Textures.size(); ++i) {
-        SAFE_DELETE(m_Textures[i]);
-    }
     m_Textures.clear();
-    m_Textures.resize(0);
-    m_pScene = NULL;
-    //delete m_pScene;
-    m_Importer = NULL;
-    delete m_Importer;
+
+    delete m_pScene;
+    m_pScene = nullptr;
+    m_Importer = nullptr;
 }//end clear()
 
 bool RigMesh::loadRigMesh(const std::string& filename )
 {
     //release a previously loaded RigMesh (if it exists)
     clear();
-    
+
     GLExitIfError();
-    
+
     bool Ret = false;
     //create an instance of the importer class, very important to create it on heap and NOT on stack, so that it persists after execution leaves this class and might be accessed later, after load is complete
-    Assimp::Importer* importer = new Assimp::Importer();;
-    
+    auto* importer = new Assimp::Importer();
+
     Assimp::DefaultLogger::create( ASSIMP_DEFAULT_LOG_NAME,
                                   Assimp::Logger::VERBOSE,
                                   aiDefaultLogStream_DEBUGGER|aiDefaultLogStream_FILE,
-                                  NULL );
-    
+                                  nullptr );
+
     // And have it read the given file with some example postprocessing
     // Usually - if speed is not the most important aspect for you - you'll
     // propably to request more postprocessing than we do in this example:
@@ -123,19 +106,19 @@ bool RigMesh::loadRigMesh(const std::string& filename )
         aiMat2glmMat(&(m_pScene->mRootNode->mTransformation),m_GlobalInverseTransform);
         m_GlobalInverseTransform=glm::inverse(m_GlobalInverseTransform);
         Ret = initFromScene(m_pScene, filename);
-        
+
 #if INTERPOLATION==GA_GAALOP || INTERPOLATION==CGA_GAALOP || INTERPOLATION==GA_GAIGEN || INTERPOLATION==CGA_GAIGEN
         c3ga::TRSversor v = c3ga::matrix4x4ToVersorPS(value_ptr(m_GlobalInverseTransform), 1);
 #endif
 
 #if INTERPOLATION==GA_GAALOP || INTERPOLATION==CGA_GAALOP
         m_GlobalInverseTransformVersor = new float[32];
-        
-        
-        
+
+
+
         for (int i=0; i<32; i++)
             m_GlobalInverseTransformVersor[i] = 0;
-        
+
         m_GlobalInverseTransformVersor[0] = v.m_c[0]; // 1.0
         m_GlobalInverseTransformVersor[6] = v.m_c[1]; // e1 ^ e2
         m_GlobalInverseTransformVersor[7] =  v.m_c[2]; // e1 ^ e3
@@ -145,16 +128,16 @@ bool RigMesh::loadRigMesh(const std::string& filename )
         m_GlobalInverseTransformVersor[13] = v.m_c[6]; // e3 ^ einf
         m_GlobalInverseTransformVersor[26] = v.m_c[11];  // e1 ^ (e2 ^ (e3 ^ einf))
 #endif
-        
+
 #if INTERPOLATION==GA_GAIGEN || INTERPOLATION==CGA_GAIGEN
         m_GlobalInverseTransformGaigen = v;
 #endif
-        
+
         glm::quat x = glm::quat(m_GlobalInverseTransform);
         glm::vec3 translation = glm::vec3(m_GlobalInverseTransform[3][0], m_GlobalInverseTransform[3][1], m_GlobalInverseTransform[3][2]);
         m_GlobalInverseTransformDQ = glm::dualquat(x, translation);
-        
-        rootNode = copyAiNode(m_pScene->mRootNode, NULL);
+
+        rootNode = copyAiNode(m_pScene->mRootNode, nullptr);
         copyAnimationData();
         QuatToRotors(m_pScene->mRootNode);
     }
@@ -162,18 +145,22 @@ bool RigMesh::loadRigMesh(const std::string& filename )
     {
         std::cout<<"Error parsing "<< filename.c_str() <<": "<<importer->GetErrorString() <<std::endl;
     }
-    
+
     return Ret;
 }//end loadRigMesh()
 
 void RigMesh::copyAnimationData()
 {
+    if (!m_pScene->mAnimations) {
+        return;
+    }
+
     const aiAnimation* pAnimation = m_pScene->mAnimations[0];
     aiAnim = new glGA::aiAnimationglGA();
     aiAnim->mNumChannels =pAnimation->mNumChannels;
     cout << aiAnim->mNumChannels;
     aiAnim->mChannels = new glGA::aiNodeAnimglGA*[aiAnim->mNumChannels];
-    
+
     for (int i=0; i<aiAnim->mNumChannels; i++)
     {
         aiAnim->mChannels[i] = new glGA::aiNodeAnimglGA();
@@ -184,25 +171,25 @@ void RigMesh::copyAnimationData()
 
 void RigMesh::QuatToRotors(aiNode* pNode)
 {
-    assert(pNode!=NULL);
-    
+    assert(pNode!=nullptr);
+
     std::string NodeName(pNode->mName.data);
-    
+
     glGA::aiNodeAnimglGA* pNodeAnim = findNodeAnim(aiAnim, NodeName);
     if (pNodeAnim)
     {
 #if INTERPOLATION==GA_GAALOP
         pNodeAnim->rotorGA_GAALOP = new aiRotor[pNodeAnim->assimpAiNode->mNumRotationKeys];
 #endif
-        
+
 #if INTERPOLATION==CGA_GAALOP
         pNodeAnim->rotor = new aiRotor[pNodeAnim->assimpAiNode->mNumRotationKeys];
 #endif
-      
+
 #if INTERPOLATION==GA_GAIGEN
         pNodeAnim->rotorGaigen2 = new e3ga::rotor[pNodeAnim->assimpAiNode->mNumRotationKeys];
 #endif
-        
+
 #if INTERPOLATION==CGA_GAIGEN
         pNodeAnim->rotorGaigen = new c3ga::rotor[pNodeAnim->assimpAiNode->mNumRotationKeys];
 #endif
@@ -215,40 +202,40 @@ void RigMesh::QuatToRotors(aiNode* pNode)
         {
             aiQuaternion quat = pNodeAnim->assimpAiNode->mRotationKeys[i].mValue;
             glm::quat glmQuat(quat.w, quat.x, quat.y, quat.z);
-            
+
             glmQuat = glm::normalize(glmQuat);
             float angle = glm::angle(glmQuat);
             glm::vec3 axis = glm::axis(glmQuat);
-            
+
 #if INTERPOLATION==GA_GAALOP
             pNodeAnim->rotorGA_GAALOP[i] = calculateGA_GAALOP_Rot(angle, axis.x, axis.y, axis.z);
 #endif
-            
+
 #if INTERPOLATION==CGA_GAALOP
             pNodeAnim->rotor[i] = calculate(angle, axis.x, axis.y, axis.z);
 #endif
-            
+
 #if INTERPOLATION==CGA_GAIGEN
             c3ga::mv uC = c3ga::unit_e(axis.x*c3ga::e1+axis.y*c3ga::e2+axis.z*c3ga::e3);
             pNodeAnim->rotorGaigen[i] = _rotor(c3ga::exp(angle/2.0 * (-c3ga::I3 * (uC) )));;
 #endif
-            
+
 #if INTERPOLATION==GA_GAIGEN
             e3ga::mv u = e3ga::unit_e(axis.x*e3ga::e1+axis.y*e3ga::e2+axis.z*e3ga::e3);
             pNodeAnim->rotorGaigen2[i] = _rotor( e3ga::exp( _bivector(angle/2.0 * (-e3ga::I3 * (u) )) ));
 #endif
-            
+
 #if INTERPOLATION==GA_VERSOR || INTERPOLATION==CGA_VERSOR
             vsr::cga::Vec srcAxis(axis.x, axis.y, axis.z);
-            vsr::cga::Line lin1 = vsr::cga::Vec(0,0,0).null() ^ srcAxis.null() ^ vsr::cga::Inf(1);
-            
+            vsr::cga::Line lin1 = vsr::cga::Vec(0,0,0).nullptr() ^ srcAxis.nullptr() ^ vsr::cga::Inf(1);
+
             vsr::cga::Biv dll = lin1.dual()/lin1.dual().norm();
-            
+
             pNodeAnim->rotorVersor[i] = vsr::cga::Gen::rot(dll*angle/2.0);
             #endif
         }
     }
-    
+
     for (uint i = 0 ; i < pNode->mNumChildren ; i++)
     {
         QuatToRotors(pNode->mChildren[i]);
@@ -259,26 +246,26 @@ void RigMesh::QuatToRotors(aiNode* pNode)
 glGA::aiNodeglGA* RigMesh::copyAiNode(aiNode* node, glGA::aiNodeglGA* parent)
 {
     glGA::aiNodeglGA* newRoot;
-    if (node!=NULL)
+    if (node!=nullptr)
     {
         newRoot = new glGA::aiNodeglGA();
         newRoot->mName = aiString(node->mName);
         std::string NodeName(newRoot->mName.data);
         newRoot->mParent=parent;
         newRoot->mNumChildren = node->mNumChildren;
-        newRoot->mChildren=NULL;
+        newRoot->mChildren=nullptr;
         newRoot->mChildren = new glGA::aiNodeglGA*[node->mNumChildren];
-        
+
         glm::mat4 NodeTransformation;
         aiMat2glmMat( &(node->mTransformation), NodeTransformation);
-        
-        c3ga::TRSversor v = c3ga::matrix4x4ToVersorPS(value_ptr(NodeTransformation), 1);
-        
+
+        c3ga::TRSversor v = c3ga::matrix4x4ToVersorPS(value_ptr(NodeTransformation), true);
+
         #if INTERPOLATION==CGA_GAALOP
         /************ Gaalop *************/
         for (int i=0; i<32; i++)
             newRoot->rotor[i] = 0;
-        
+
         newRoot->rotor[0] = v.m_c[0]; // 1.0
         newRoot->rotor[6] = v.m_c[1]; // e1 ^ e2
         newRoot->rotor[7] =  v.m_c[2]; // e1 ^ e3
@@ -289,19 +276,19 @@ glGA::aiNodeglGA* RigMesh::copyAiNode(aiNode* node, glGA::aiNodeglGA* parent)
         newRoot->rotor[26] = v.m_c[11];  // e1 ^ (e2 ^ (e3 ^ einf))
         /*********************************/
 #endif
-        
+
         #if INTERPOLATION==GA_GAIGEN || INTERPOLATION==CGA_GAIGEN
         /************ Gaigen ************/
         newRoot->versorGaigen = v;
         /*********************************/
         #endif
-        
+
         for (uint i = 0 ; i < node->mNumChildren ; i++)
         {
             newRoot->mChildren[i] = copyAiNode(node->mChildren[i], newRoot);
         }
-    }else return NULL;
-    
+    }else return nullptr;
+
     return newRoot;
 }
 
@@ -310,16 +297,16 @@ bool RigMesh::loadRigMesh(const std::string& filename, glm::vec3 rotation, glm::
     this->rotation = rotation;
     this->position = position;
     this->scale = scale;
-    
-    float Ret = loadRigMesh(filename);
-    
+
+    auto Ret = loadRigMesh(filename);
+
     mat4 tr = translate(mat4(), position);
     mat4 rotateX = rotate(tr, rotation.x, vec3(1.0, 0.0, 0.0));
     mat4 rotateY = rotate(rotateX, rotation.y, vec3(0.0, 1.0, 0.0));
     mat4 rotateZ = rotate(rotateY, rotation.z, vec3(0.0, 0.0, 1.0));
     mat4 initialTransformation = glm::scale(rotateZ, vec3(scale, scale, scale));
     this->initialTransformation = initialTransformation;
-    
+
     return Ret;
 }//end loadRigMesh()
 
@@ -338,11 +325,10 @@ bool RigMesh::loadRigMesh(const std::string& filename, glm::vec3 rotation, glm::
 bool RigMesh::initFromScene(const aiScene* pScene, const std::string& filename)
 {
     m_Entries.resize(pScene->mNumMeshes);
-    m_Textures.resize(pScene->mNumMaterials);
-    
+
     uint numVertices = 0;
     uint numIndices = 0;
-    
+
     // count the num of vertices and indices
     for (unsigned int i=0; i<m_Entries.size(); ++i)
     {
@@ -350,34 +336,34 @@ bool RigMesh::initFromScene(const aiScene* pScene, const std::string& filename)
         m_Entries[i].numIndices     = pScene->mMeshes[i]->mNumFaces *3;
         m_Entries[i].baseVertex     = numVertices;
         m_Entries[i].baseIndex      = numIndices;
-        
+
         numVertices += pScene->mMeshes[i]->mNumVertices;
         numIndices += m_Entries[i].numIndices;
     }
-    
+
     // Reserve space in the vectors for the vertex attributes and indixes
     Positions.reserve(numVertices);
     Normals.reserve(numVertices);
     TexCoords.reserve(numVertices);
     Bones.resize(numVertices);
     Indices.reserve(numIndices);
-    
+
     GLExitIfError();
-    
+
     // initialize the scene meshes one by one
     for (unsigned int i=0; i<m_Entries.size(); ++i) {
         const aiMesh* paiMesh = pScene->mMeshes[i];
         this->initRigMesh(i, paiMesh, Positions, Normals, TexCoords, Bones, Indices);
     }
-    
+
     if (!initMaterials(pScene, filename)) {
         return false;
     }
     // @@@GPTODO: Colors are missing
-    
+
     bool bGLError = GLCheckError();
     return  bGLError;
-    
+
 }//end initFromScene()
 
 /*
@@ -397,27 +383,27 @@ void RigMesh::initRigMesh(uint RigMeshIndex,
                           )
 {
     const aiVector3D    zero3D(0.0f,0.0f,0.0f);
-    
+
     // Populate the vertex attribute vectors
     for (unsigned int i=0; i < paiMesh->mNumVertices; ++i)
     {
         const aiVector3D* pPos      = &(paiMesh->mVertices[i]);
         const aiVector3D* pNormal   = &(paiMesh->mNormals[i]);
         const aiVector3D* pTexCoord = paiMesh->HasTextureCoords(0) ? &(paiMesh->mTextureCoords[0][i]) : &zero3D;
-        
-        positions.push_back(glm::vec3(pPos->x, pPos->y, pPos->z));
-        
-        if(pNormal!=NULL)
+
+        positions.emplace_back(glm::vec3(pPos->x, pPos->y, pPos->z));
+
+        if(pNormal!=nullptr)
         {
             vec4 normal(pNormal->x, pNormal->y, pNormal->z, 1.0);
-            normals.push_back(glm::vec3(normal[0], normal[1], normal[2]));
+            normals.emplace_back(glm::vec3(normal[0], normal[1], normal[2]));
         }
-        
-        texCoords.push_back(glm::vec2(pTexCoord->x,pTexCoord->y));
+
+        texCoords.emplace_back(glm::vec2(pTexCoord->x,pTexCoord->y));
     }
-    
+
     loadBones(RigMeshIndex, paiMesh, bones);
-    
+
     // Populate the index buffer
     for (unsigned int i=0; i < paiMesh->mNumFaces; ++i)
     {
@@ -427,7 +413,7 @@ void RigMesh::initRigMesh(uint RigMeshIndex,
         indices.push_back(face.mIndices[1]);
         indices.push_back(face.mIndices[2]);
     }
-    
+
     GLExitIfError();
 }//end initFromScene()
 
@@ -441,7 +427,7 @@ void RigMesh::loadBones(uint meshIndex, const aiMesh* paiMesh, std::vector<Verte
     for (uint i=0; i < paiMesh->mNumBones; ++i) {
         uint boneIndex = 0;
         std::string boneName(paiMesh->mBones[i]->mName.data);
-        
+
         if (m_BoneMapping.find(boneName) == m_BoneMapping.end()) {
             //allocate an index for a new bone
             boneIndex = m_NumBones;
@@ -451,14 +437,14 @@ void RigMesh::loadBones(uint meshIndex, const aiMesh* paiMesh, std::vector<Verte
             glm::mat4 bo;
             aiMat2glmMat( &(paiMesh->mBones[i]->mOffsetMatrix), bo);
             m_BoneInfo[boneIndex].BoneOffset = bo;
-            
+
             c3ga::TRSversor v = c3ga::matrix4x4ToVersorPS(value_ptr(bo), 1);
-            
+
             #if INTERPOLATION==CGA_GAALOP
             m_BoneInfo[boneIndex].BoneOffsetVersor = new float[32];
             for (int i=0; i<32; i++)
                 m_BoneInfo[boneIndex].BoneOffsetVersor[i] = 0;
-            
+
             m_BoneInfo[boneIndex].BoneOffsetVersor[0] = v.m_c[0]; // 1.0
             m_BoneInfo[boneIndex].BoneOffsetVersor[6] = v.m_c[1]; // e1 ^ e2
             m_BoneInfo[boneIndex].BoneOffsetVersor[7] =  v.m_c[2]; // e1 ^ e3
@@ -467,14 +453,14 @@ void RigMesh::loadBones(uint meshIndex, const aiMesh* paiMesh, std::vector<Verte
             m_BoneInfo[boneIndex].BoneOffsetVersor[11] = v.m_c[5]; // e2 ^ einf
             m_BoneInfo[boneIndex].BoneOffsetVersor[13] = v.m_c[6]; // e3 ^ einf
             m_BoneInfo[boneIndex].BoneOffsetVersor[26] = v.m_c[11];  // e1 ^ (e2 ^ (e3 ^ einf))*/
-            
+
 
             #endif
             #if INTERPOLATION==CGA_GAIGEN
             m_BoneInfo[boneIndex].BoneOffsetGaigen = v;
             #endif
             m_BoneMapping[boneName] = boneIndex;
-            
+
             glm::quat x = glm::quat(bo);
             glm::vec3 translation = glm::vec3(bo[3][0], bo[3][1], bo[3][2]);
             m_BoneInfo[boneIndex].BoneOffsetDQ = glm::dualquat(x, translation);
@@ -488,12 +474,12 @@ void RigMesh::loadBones(uint meshIndex, const aiMesh* paiMesh, std::vector<Verte
             bones[vertexID].addBoneData(boneIndex, weight);
         }
     }//end for i
-    
+
     //DEBUG m_BoneMapping:
-    for (std::map<std::string, uint>::iterator j=m_BoneMapping.begin(); j!=m_BoneMapping.end(); ++j) {
-        std::cout<<"Bone: "<< (*j).first <<" with index: "<<(*j).second<<std::endl;
+    for (auto &boneMapping : m_BoneMapping) {
+        std::cout << "Bone: " << boneMapping.first << " with index: " << boneMapping.second << std::endl;
     }
-    
+
 }//end loadBones()
 
 /*
@@ -502,59 +488,45 @@ void RigMesh::loadBones(uint meshIndex, const aiMesh* paiMesh, std::vector<Verte
  - initialises all materials in Scene
  - loads all Textures in vector m_Textures
  */
-bool RigMesh::initMaterials(const aiScene* pScene, const std::string& filename)
-{
+bool RigMesh::initMaterials(const aiScene* pScene, const std::string& filename) {
     // Extract the directory part from the file name
-    std::string::size_type  slashIndex = filename.find_last_of("/");
-    std::string             dir;
-    
+    const auto slashIndex = filename.find_last_of('/');
+    std::string dir;
+
     if (slashIndex == std::string::npos) {
         dir = ".";
-    }
-    else if (slashIndex == 0)
-    {
+    } else if (slashIndex == 0) {
         dir = "/";
-    }
-    else
-    {
+    } else {
         dir = filename.substr(0, slashIndex);
     }
-    
-    bool Ret = true;
-    
-    // initialize the materials
-    for (unsigned int i=0; i < pScene->mNumMaterials; ++i)
-    {
-        const aiMaterial* pMaterial = pScene->mMaterials[i];
-        
-        m_Textures[i] = NULL;
-        
-        if (pMaterial->GetTextureCount(aiTextureType_DIFFUSE) >0)
-        {
-            aiString path;
-            
-            if (pMaterial->GetTexture(aiTextureType_DIFFUSE, 0, &path, NULL, NULL, NULL, NULL, NULL) == AI_SUCCESS )
-            {
-                std::string fullPath = dir + "/" + path.data;
-                m_Textures[i] = new Texture(GL_TEXTURE_2D, fullPath.c_str());
-                
-                
-                if (!m_Textures[i]->loadTexture()) {
-                    std::cout<<"Error Loading texture: "<<fullPath.c_str() <<std::endl;
-                    delete m_Textures[i];
-                    m_Textures[i] = NULL;
-                    Ret = false;
+
+    // Initialize the materials
+    aiString path;
+    aiMaterial* pMaterial;
+    std::string fullPath;
+
+    for (auto i = 0; i < pScene->mNumMaterials; ++i) {
+        pMaterial = pScene->mMaterials[i];
+
+        if (pMaterial->GetTextureCount(aiTextureType_DIFFUSE)) {
+            if (pMaterial->GetTexture(aiTextureType_DIFFUSE, 0, &path, nullptr, nullptr, nullptr, nullptr, nullptr) == AI_SUCCESS) {
+                fullPath = dir + "/" + path.data;
+                m_Textures.emplace_back(Texture(GL_TEXTURE_2D, fullPath));
+
+                if (!m_Textures.back().loadTexture()) {
+                    std::cout << "Error Loading texture: " << fullPath << std::endl;
+                    m_Textures.pop_back();
+                    return false;
+                } else {
+                    std::cout << "Loaded texture: " << fullPath << std::endl;
+                    return true;
                 }
-                else
-                {
-                    std::cout<<"Loaded texture: "<<fullPath.c_str() <<std::endl;
-                }
-            }//end if pMaterial->getTexture
-        }//end if pMaterial->GetTextureCount
-    }//end for()
-    
-    return Ret;
-    
+            }
+        }
+    }
+
+    return true;
 }//end initMaterials()
 
 /*
@@ -565,20 +537,17 @@ bool RigMesh::initMaterials(const aiScene* pScene, const std::string& filename)
  */
 void RigMesh::render()
 {
-    for (unsigned int i=0; i < m_Entries.size(); ++i)
-    {
-        const unsigned int materialIndex = m_Entries[i].materialIndex;
-        
-        assert(materialIndex < m_Textures.size());
-        
-        if (m_Textures[materialIndex]) {
-            m_Textures[materialIndex]->bindTexture(GL_TEXTURE0);
+    for (const auto& pEntry : m_Entries) {
+        const auto materialIndex = pEntry.materialIndex;
+
+        if (materialIndex < m_Textures.size()) {
+            m_Textures[materialIndex].bindTexture(GL_TEXTURE0);
         }
-        
+
         // render primitives from array data with a per-element offset
         /*
          glDrawElementsBaseVertex behaves identically to glDrawElements except that the ith element transferred by the corresponding draw call will be taken from element indices[i] + basevertex of each enabled array:
-         
+
          void glDrawElementsBaseVertex(	GLenum  	mode,
          GLsizei  	count,
          GLenum  	type,
@@ -586,13 +555,12 @@ void RigMesh::render()
          GLint  	basevertex);
          */
         glDrawElementsBaseVertex(GL_TRIANGLES,
-                                 m_Entries[i].numIndices,
+                                 pEntry.numIndices,
                                  GL_UNSIGNED_INT,
-                                 (void*)(sizeof(unsigned int) * m_Entries[i].baseIndex),
-                                 m_Entries[i].baseVertex);
-        
+                                 reinterpret_cast<void*>(sizeof(unsigned int) * pEntry.baseIndex),
+                                 pEntry.baseVertex);
     }//end for
-    
+
 }//end render()
 
 
@@ -603,8 +571,8 @@ uint RigMesh::findPosition(float animationTime, const aiNodeAnim* pNodeAnim)
             return i;
         }
     }
-    
-    assert(0);
+
+    assert(false);
 }
 
 /*
@@ -613,7 +581,7 @@ uint RigMesh::findPosition(float animationTime, const aiNodeAnim* pNodeAnim)
 unsigned int RigMesh::findRotation(float animationTime, const aiNodeAnim* nodeAnim)
 {
     assert(nodeAnim->mNumRotationKeys > 0);
-    
+
     for (unsigned int i = 0 ; i < nodeAnim->mNumRotationKeys - 1 ; i++)
     {
         if (animationTime < (float)nodeAnim->mRotationKeys[i + 1].mTime)
@@ -621,22 +589,22 @@ unsigned int RigMesh::findRotation(float animationTime, const aiNodeAnim* nodeAn
             return i;
         }
     }
-    assert(0);
-    
+    assert(false);
+
 }
 
 
 uint RigMesh::findScaling(float animationTime, const aiNodeAnim* pNodeAnim)
 {
     assert(pNodeAnim->mNumScalingKeys > 0);
-    
+
     for (uint i = 0 ; i < pNodeAnim->mNumScalingKeys - 1 ; i++) {
         if (animationTime < (float)pNodeAnim->mScalingKeys[i + 1].mTime) {
             return i;
         }
     }
-    
-    assert(0);
+
+    assert(false);
 }
 
 
@@ -646,7 +614,7 @@ void RigMesh::calcInterpolatedPosition(aiVector3D& Out, float animationTime, con
         Out = pNodeAnim->mPositionKeys[0].mValue;
         return;
     }
-    
+
     uint PositionIndex = findPosition(animationTime, pNodeAnim);
     uint NextPositionIndex = (PositionIndex + 1);
     assert(NextPositionIndex < pNodeAnim->mNumPositionKeys);
@@ -672,7 +640,7 @@ void RigMesh::calcInterpolatedRotation(aiQuaternion& Out, float animationTime, c
         Out = pNodeAnim->mRotationKeys[0].mValue;
         return;
     }
-    
+
     uint RotationIndex = findRotation(animationTime, pNodeAnim);
     uint NextRotationIndex = (RotationIndex + 1);
     assert(NextRotationIndex < pNodeAnim->mNumRotationKeys);
@@ -696,7 +664,7 @@ void RigMesh::calcInterpolatedScaling(aiVector3D& Out, float animationTime, cons
         Out = pNodeAnim->mScalingKeys[0].mValue;
         return;
     }
-    
+
     uint ScalingIndex = findScaling(animationTime, pNodeAnim);
     uint NextScalingIndex = (ScalingIndex + 1);
     assert(NextScalingIndex < pNodeAnim->mNumScalingKeys);
@@ -712,52 +680,52 @@ void RigMesh::calcInterpolatedScaling(aiVector3D& Out, float animationTime, cons
 
 void RigMesh::readNodeHierarchyQuat(float animationTime, const aiNode* pNode, const glm::mat4& parentTransform)
 {
-    assert(pNode!=NULL);
+    assert(pNode!=nullptr);
     std::string NodeName(pNode->mName.data);
-    
+
     const aiAnimation* pAnimation = m_pScene->mAnimations[0];
-    
+
     glm::mat4 NodeTransformation;
     aiMat2glmMat( &(pNode->mTransformation), NodeTransformation);
-    
+
     const aiNodeAnim* pNodeAnim = findNodeAnim(pAnimation, NodeName);
-    
+
     if (pNodeAnim) {
         aiVector3D scaling;
         calcInterpolatedScaling(scaling, animationTime, pNodeAnim);
         glm::mat4 scalingMatrix= glm::scale( glm::mat4(1.0), glm::vec3(scaling.x, scaling.y, scaling.z));
-        
-        
+
+
         high_resolution_clock::time_point start = std::chrono::high_resolution_clock::now();
-        
+
         aiQuaternion rotationQuat;
         calcInterpolatedRotation(rotationQuat, animationTime, pNodeAnim);
         aiMatrix4x4 assimpRotationMatrix(rotationQuat.GetMatrix());
         glm::mat4 rotationMatrix;
         aiMat2glmMat(&assimpRotationMatrix, rotationMatrix);
-        
+
         aiVector3D translation;
         calcInterpolatedPosition(translation, animationTime, pNodeAnim);
         glm::mat4 translationMatrix = glm::translate(glm::mat4(1.0), glm::vec3(translation.x, translation.y, translation.z));
-        
-        
-        
+
+
+
         high_resolution_clock::time_point end = std::chrono::high_resolution_clock::now();
         duration<double, std::milli> time_span = duration_cast<duration<double, std::milli> >(end - start);
-        
+
         NodeTransformation = translationMatrix * rotationMatrix;
         total += time_span.count();
         i++;
         avgTime = total/i;
     }
-    
+
     glm::mat4 GlobalTransformation = parentTransform * NodeTransformation;
-    
+
     if (m_BoneMapping.find(NodeName) != m_BoneMapping.end()) {
         uint BoneIndex = m_BoneMapping[NodeName];
         m_BoneInfo[BoneIndex].FinalTransformation = m_GlobalInverseTransform * GlobalTransformation * m_BoneInfo[BoneIndex].BoneOffset;
     }
-    
+
     for (uint i = 0 ; i < pNode->mNumChildren ; i++) {
         readNodeHierarchyQuat(animationTime, pNode->mChildren[i], GlobalTransformation);
     }
@@ -767,16 +735,16 @@ void RigMesh::boneTransform(float TimeInSeconds, std::vector<glm::mat4>& transfo
     std::vector<RotorDef> transformsVersors;
     //    std::cout<<"@@@ entered RigMesh::boneTransform()"<< std::endl;
     glm::mat4 Identity(1.0);
-    
+
     if (m_pScene->HasAnimations()) {
-        
+
         //std::cout<<"found "<<m_pScene->mNumAnimations<<" animations in loaded Scene!"<<std::endl;
-        assert(m_pScene!=NULL);
-        assert( (m_pScene->mAnimations[0]) !=NULL);
+        assert(m_pScene!=nullptr);
+        assert( (m_pScene->mAnimations[0]) !=nullptr);
         const aiAnimation* basicAnim = m_pScene->mAnimations[0];
         //std::cout<<"found basicAnim with name: "<< basicAnim->mName.C_Str()<<std::endl;
-        
-        assert(basicAnim !=NULL);
+
+        assert(basicAnim !=nullptr);
         //float TicksPerSecond = m_pScene->mAnimations[0]->mTicksPerSecond != 0 ? m_pScene->mAnimations[0]->mTicksPerSecond : 25.0f;
         float TicksPerSecond;
         if ( basicAnim->mTicksPerSecond != 0)
@@ -784,22 +752,22 @@ void RigMesh::boneTransform(float TimeInSeconds, std::vector<glm::mat4>& transfo
         else
             TicksPerSecond = 25.0f;;
         //std::cout<<"found TicksPerSecond in animation: "<< TicksPerSecond<<std::endl;
-        
+
         float TimeInTicks = TimeInSeconds * TicksPerSecond;
         float Duration = m_pScene->mAnimations[0]->mDuration;
         //cout << Duration << endl;
         float animationTime = fmod(TimeInTicks,Duration);
-        
+
         readNodeHierarchyQuat(animationTime, m_pScene->mRootNode, Identity);
-        
+
         transforms.resize(m_NumBones);
-        
+
         for (uint i = 0 ; i < m_NumBones ; i++)
         {
             transforms[i] = m_BoneInfo[i].FinalTransformation;
         }
-        
-    }//if m_pScene!=NULL
+
+    }//if m_pScene!=nullptr
     else
         std::cout<<"no animations found in aiScene: "<<m_pScene->mNumAnimations<<std::endl;
 }
@@ -815,13 +783,13 @@ float RigMesh::getStartEndQuat(aiQuaternion& Start, aiQuaternion& End, float ani
     uint RotationIndex = findRotation(animationTime, pNodeAnim);
     uint NextRotationIndex = (RotationIndex + 1);
     assert(NextRotationIndex < pNodeAnim->mNumRotationKeys);
-    
+
     Start = pNodeAnim->mRotationKeys[RotationIndex].mValue;
     End = pNodeAnim->mRotationKeys[NextRotationIndex].mValue;
-    
+
     float DeltaTime = pNodeAnim->mRotationKeys[NextRotationIndex].mTime - pNodeAnim->mRotationKeys[RotationIndex].mTime;
     float Factor = (animationTime - (float)pNodeAnim->mRotationKeys[RotationIndex].mTime) / DeltaTime;
-    
+
     return Factor;
 }
 
@@ -830,15 +798,15 @@ float RigMesh::getStartEndPos(aiVector3D& Start, aiVector3D& End, float animatio
     uint PositionIndex = findPosition(animationTime, pNodeAnim);
     uint NextPositionIndex = (PositionIndex + 1);
     assert(NextPositionIndex < pNodeAnim->mNumPositionKeys);
-    
+
     float DeltaTime = pNodeAnim->mPositionKeys[NextPositionIndex].mTime - pNodeAnim->mPositionKeys[PositionIndex].mTime;
     float Factor = (animationTime - (float)pNodeAnim->mPositionKeys[PositionIndex].mTime) / DeltaTime;
-    
+
     Start = pNodeAnim->mPositionKeys[PositionIndex].mValue;
     End = pNodeAnim->mPositionKeys[NextPositionIndex].mValue;
-    
+
     return Factor;
-    
+
 }
 
 /*
@@ -855,16 +823,16 @@ void RigMesh::boneTransformDQ(float TimeInSeconds, std::vector<glm::mat4>& trans
     std::vector<RotorDef> transformsVersors;
     //    std::cout<<"@@@ entered RigMesh::boneTransform()"<< std::endl;
     glm::mat4 Identity(1.0);
-    
+
     if (m_pScene->HasAnimations()) {
-        
+
         //std::cout<<"found "<<m_pScene->mNumAnimations<<" animations in loaded Scene!"<<std::endl;
-        assert(m_pScene!=NULL);
-        assert( (m_pScene->mAnimations[0]) !=NULL);
+        assert(m_pScene!=nullptr);
+        assert( (m_pScene->mAnimations[0]) !=nullptr);
         const aiAnimation* basicAnim = m_pScene->mAnimations[0];
         //std::cout<<"found basicAnim with name: "<< basicAnim->mName.C_Str()<<std::endl;
-        
-        assert(basicAnim !=NULL);
+
+        assert(basicAnim !=nullptr);
         //float TicksPerSecond = m_pScene->mAnimations[0]->mTicksPerSecond != 0 ? m_pScene->mAnimations[0]->mTicksPerSecond : 25.0f;
         float TicksPerSecond;
         if ( basicAnim->mTicksPerSecond != 0)
@@ -872,21 +840,21 @@ void RigMesh::boneTransformDQ(float TimeInSeconds, std::vector<glm::mat4>& trans
         else
             TicksPerSecond = 25.0f;;
         //std::cout<<"found TicksPerSecond in animation: "<< TicksPerSecond<<std::endl;
-        
+
         float TimeInTicks = TimeInSeconds * TicksPerSecond;
         float Duration = m_pScene->mAnimations[0]->mDuration;
         float animationTime = fmod(TimeInTicks,Duration);
-        
+
         readNodeHierarchyDQ(animationTime, m_pScene->mRootNode, Identity);
-        
+
         transforms.resize(m_NumBones);
-        
+
         for (uint i = 0 ; i < m_NumBones ; i++)
         {
             transforms[i] = m_BoneInfo[i].FinalTransformation;
         }
-        
-    }//if m_pScene!=NULL
+
+    }//if m_pScene!=nullptr
     else
         std::cout<<"no animations found in aiScene: "<<m_pScene->mNumAnimations<<std::endl;
 }
@@ -894,37 +862,37 @@ void RigMesh::boneTransformDQ(float TimeInSeconds, std::vector<glm::mat4>& trans
 void RigMesh::readNodeHierarchyDQ(float animationTime, const aiNode* pNode, const glm::mat4& parentTransform)
 {
     //std::cout<<"@@@GPTEMP: inside readNodeHierarchy()"<<std::endl;
-    assert(pNode!=NULL);
+    assert(pNode!=nullptr);
     std::string NodeName(pNode->mName.data);
-    
+
     const aiAnimation* pAnimation = m_pScene->mAnimations[0];
-    
+
     glm::mat4 NodeTransformation;
     aiMat2glmMat( &(pNode->mTransformation), NodeTransformation);
-    
+
     const aiNodeAnim* pNodeAnim = findNodeAnim(pAnimation, NodeName);
-    
+
     if (pNodeAnim) {
         aiVector3D scaling;
         calcInterpolatedScaling(scaling, animationTime, pNodeAnim);
         glm::mat4 scalingMatrix= glm::scale( glm::mat4(1.0), glm::vec3(scaling.x, scaling.y, scaling.z));
-        
+
         std::chrono::high_resolution_clock::time_point start = std::chrono::high_resolution_clock::now();
-        
+
         NodeTransformation = calcInterpolatedRotationTranslationDQ(animationTime, pNodeAnim);
-        
+
         std::chrono::high_resolution_clock::time_point end = std::chrono::high_resolution_clock::now();
         duration<double, std::milli> time_span = duration_cast<duration<double, std::milli> >(end - start);
         avgTime = time_span.count();
     }
-    
+
     glm::mat4 GlobalTransformation = parentTransform * NodeTransformation;
-    
+
     if (m_BoneMapping.find(NodeName) != m_BoneMapping.end()) {
         uint BoneIndex = m_BoneMapping[NodeName];
         m_BoneInfo[BoneIndex].FinalTransformation = m_GlobalInverseTransform * GlobalTransformation * m_BoneInfo[BoneIndex].BoneOffset;
     }
-    
+
     for (uint i = 0 ; i < pNode->mNumChildren ; i++) {
         readNodeHierarchyDQ(animationTime, pNode->mChildren[i], GlobalTransformation);
     }
@@ -932,10 +900,10 @@ void RigMesh::readNodeHierarchyDQ(float animationTime, const aiNode* pNode, cons
 glm::mat4 RigMesh::calcInterpolatedRotationTranslationDQ(float animationTime, const aiNodeAnim* pNodeAnim)
 {
     glm::mat4 finalRotTrans;
-    
+
     aiVector3D StartPos, EndPos;
     aiQuaternion StartQuat, EndQuat;
-    
+
     if (pNodeAnim->mNumPositionKeys == 1 && pNodeAnim->mNumRotationKeys == 1)
     {
         aiVector3D StartPos = pNodeAnim->mPositionKeys[0].mValue;
@@ -952,7 +920,7 @@ glm::mat4 RigMesh::calcInterpolatedRotationTranslationDQ(float animationTime, co
         {
             StartPos = pNodeAnim->mPositionKeys[0].mValue;
             EndPos = pNodeAnim->mPositionKeys[0].mValue;
-            
+
             Factor = getStartEndQuat(StartQuat, EndQuat, animationTime, pNodeAnim);
         }
         else if (pNodeAnim->mNumPositionKeys > 1 && pNodeAnim->mNumRotationKeys > 1)
@@ -965,21 +933,21 @@ glm::mat4 RigMesh::calcInterpolatedRotationTranslationDQ(float animationTime, co
             Factor = getStartEndPos(StartPos, EndPos, animationTime, pNodeAnim);
             StartQuat = pNodeAnim->mRotationKeys[0].mValue;
         }
-        
+
         glm::dualquat startDQ(glm::quat(StartQuat.w, StartQuat.x, StartQuat.y, StartQuat.z), glm::vec3(StartPos.x, StartPos.y, StartPos.z));
         glm::dualquat endDQ(glm::quat(EndQuat.w, EndQuat.x, EndQuat.y, EndQuat.z), glm::vec3(EndPos.x, EndPos.y, EndPos.z));
-        
+
         if (Factor<0)
         {
             Factor=-Factor;
         }
-        
+
         glm::dualquat finalDQ = glm::lerp(startDQ, endDQ, Factor);
-        
+
         glm::mat3x4 final2 = glm::mat3x4_cast(finalDQ);
         finalRotTrans = glm::transpose(glm::mat4(final2));
     }
-    
+
     return finalRotTrans;
 }
 
@@ -989,15 +957,19 @@ glm::mat4 RigMesh::calcInterpolatedRotationTranslationDQ(float animationTime, co
 glGA::aiNodeAnimglGA* RigMesh::findNodeAnim(glGA::aiAnimationglGA* pAnimation, const std::string NodeName)
 {
     //std::cout<<"@@@GPTEMP: inside findNodeAnim() "<<std::endl;
+    if (!pAnimation) {
+        return nullptr;
+    }
+
     for (uint i = 0 ; i < pAnimation->mNumChannels ; i++) {
         glGA::aiNodeAnimglGA* pNodeAnim = pAnimation->mChannels[i];
-        
+
         if (std::string(pNodeAnim->assimpAiNode->mNodeName.data) == NodeName) {
             return pNodeAnim;
         }
     }
-    
-    return NULL;
+
+    return nullptr;
 }
 
 const aiNodeAnim* RigMesh::findNodeAnim(const aiAnimation* pAnimation, const std::string NodeName)
@@ -1005,11 +977,11 @@ const aiNodeAnim* RigMesh::findNodeAnim(const aiAnimation* pAnimation, const std
     //std::cout<<"@@@GPTEMP: inside findNodeAnim() "<<std::endl;
     for (uint i = 0 ; i < pAnimation->mNumChannels ; i++) {
         const aiNodeAnim* pNodeAnim = pAnimation->mChannels[i];
-        
+
         if (std::string(pNodeAnim->mNodeName.data) == NodeName) {
             return pNodeAnim;
         }
     }
-    
-    return NULL;
+
+    return nullptr;
 }

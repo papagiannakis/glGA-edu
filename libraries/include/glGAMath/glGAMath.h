@@ -15,6 +15,7 @@
 #include <assimp/matrix3x3.h>
 #ifndef GLM_SWIZZLE
 #define GLM_SWIZZLE
+#endif
 #include <glm/glm.hpp>
 #include <glm/gtx/string_cast.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -57,7 +58,7 @@
 
 struct aiRotor2
 {
-    
+
 };
 struct aiRotor
 {
@@ -65,7 +66,7 @@ struct aiRotor
     float x;
     float y;
     float z;
-    
+
     aiRotor()
     {
         this->w = 0;
@@ -73,7 +74,7 @@ struct aiRotor
         this->y = 0;
         this->z = 0;
     }
-    
+
     aiRotor(float w, float x, float y, float z)
     {
         this->w = w;
@@ -81,7 +82,7 @@ struct aiRotor
         this->y = y;
         this->z = z;
     }
-    
+
     aiRotor& operator=(aiRotor a) {
         this->w = a.w;
         this->x = a.x;
@@ -101,10 +102,10 @@ struct RotorDef
     float e2einf; //11;
     float e3einf; //13;
     float e2e3einf;  //26;
-    
+
     RotorDef()
     {
-        
+
     }
     RotorDef(float scalar,
              float e1e2,
@@ -124,7 +125,7 @@ struct RotorDef
         this->e3einf=e3einf;
         this->e2e3einf=e2e3einf;
     }
-    
+
     RotorDef& operator=(const RotorDef& other) // copy assignment
     {
         this->scalar=other.scalar;
@@ -154,10 +155,10 @@ struct RotorDefScale
     float e28; //28
     float e29; //29
     float e30; //30
-    
+
     RotorDefScale()
     {
-        
+
     }
     RotorDefScale(float scalar,
                   float e1e2,
@@ -183,7 +184,7 @@ struct RotorDefScale
         this->e29=e29; //29
         this->e30=e30; //30
     }
-    
+
     RotorDefScale& operator=(const RotorDefScale& other) // copy assignment
     {
         this->scalar=other.scalar;
@@ -218,11 +219,11 @@ void    printMat4GML(std::string  matName,glm::mat4& mat);
  */
 
 
-/**  A GA Euclidean model interpolation method: 
+/**  A GA Euclidean model interpolation method:
  input: Start, End RotationQ quaternions
  output: Out quaternion
  method converts i/o quaternions to Euclidean model GA rotors (based on Gaigen and libGASandbox) and factor 'n' interpolation steps.
- 
+
  Papagiannakis, G. 2013. Geometric algebra rotors for skinned character animation blending. Technical Brief, ACM SIGGRAPH ASIA 2013, Hong Kong, November 2013, 1–6.
  **/
 
@@ -285,6 +286,3 @@ void rotateZ(float angle, int currentRot, e3ga::mv &rotor, e3ga::mv newe1,  e3ga
 
 void aiMat2glmMat(const aiMatrix4x4 *from, glm::mat4 &to);
 #endif
-
-
-#endif //glGACharacterApp_glGAMath_h
