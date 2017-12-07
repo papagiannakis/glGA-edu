@@ -63,31 +63,33 @@ namespace glGA {
 
     struct aiNodeAnimglGA
     {
-        aiNodeAnim* assimpAiNode;
+        aiNodeAnim* assimpAiNode = nullptr;
 
         #if INTERPOLATION==CGA_GAALOP
-        aiRotor* rotor;
+        aiRotor* rotor = nullptr;
         #endif
 
         #if INTERPOLATION==GA_GAALOP || INTERPOLATION==CGA_GAALOP
-        aiRotor* rotorGA_GAALOP;
+        aiRotor* rotorGA_GAALOP = nullptr;
         #endif
 
         #if INTERPOLATION==CGA_GAIGEN
-        c3ga::rotor* rotorGaigen;
+        c3ga::rotor* rotorGaigen = nullptr;
         #endif
 
         #if INTERPOLATION==GA_GAIGEN
-        e3ga::rotor* rotorGaigen2;
+        e3ga::rotor* rotorGaigen2 = nullptr;
         #endif
 
         #if INTERPOLATION==GA_VERSOR || INTERPOLATION==CGA_VERSOR
-        vsr::cga::Rot* rotorVersor;
+        vsr::cga::Rot* rotorVersor = nullptr;
         #endif
     };
 
     struct aiAnimationglGA
     {
+        aiAnimationglGA() : mNumChannels(0), mChannels(nullptr) {}
+
         /** The number of bone animation channels. Each channel affects
          *  a single node. */
         unsigned int mNumChannels;
@@ -105,13 +107,13 @@ namespace glGA {
         C_STRUCT aiMatrix4x4 mTransformation;
 
         /** Parent node. NULL if this node is the root node. */
-        C_STRUCT aiNodeglGA* mParent;
+        C_STRUCT aiNodeglGA* mParent = nullptr;
 
         /** The number of child nodes of this node. */
-        unsigned int mNumChildren;
+        unsigned int mNumChildren = 0;
 
         /** The child nodes of this node. NULL if mNumChildren is 0. */
-        C_STRUCT aiNodeglGA** mChildren;
+        C_STRUCT aiNodeglGA** mChildren = nullptr;
 
         #if INTERPOLATION==GA_GAALOP || INTERPOLATION==CGA_GAALOP
         float* rotor = new float[32];

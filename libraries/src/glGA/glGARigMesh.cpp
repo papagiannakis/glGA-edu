@@ -58,7 +58,8 @@ void RigMesh::VertexBoneData::addBoneData(uint boneID, float weight)
     assert(false);
 }
 
-RigMesh::RigMesh() : initialTransformation(mat4(1.0)), m_NumBones(0), m_GAfactorDenominator(1.0), m_pScene(nullptr) {}
+RigMesh::RigMesh() : rootNode(nullptr), aiAnim(nullptr), initialTransformation(mat4(1.0)), m_NumBones(0),
+                     m_GAfactorDenominator(1.0), m_pScene(nullptr), m_Importer(nullptr) {}
 
 void RigMesh::clear()
 {
