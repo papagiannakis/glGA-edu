@@ -5,7 +5,7 @@
 //  Created by George Papagiannakis.
 //  Copyright (c) 2012 UoC & FORTH. All rights reserved.
 //
-//  References: 
+//  References:
 //      http://ogldev.atspace.co.uk/, Etay Meiri
 
 #ifndef glGACharacterApp_glGAMesh_h
@@ -42,22 +42,22 @@
 // Basic vertex data structure
 class Vertex
 {
- 
-public: 
-    
+
+public:
+
     glm::vec3   m_pos;
     glm::vec2   m_tex;
     glm::vec3   m_normal;
-    
-    Vertex() {}
-    
+
+    Vertex() = default;
+
     Vertex(const glm::vec3& pos, const glm::vec2& tex, const glm::vec3& normal)
     {
         m_pos       = pos;
         m_tex       = tex;
         m_normal    = normal;
     }
-    
+
 };//end class glGAVertex
 
 // Basic static mesh data structure for loading any object static mesh with the Assimp library
@@ -67,13 +67,11 @@ public:
     glm::vec3 position, rotation;
     float scale;
     glm::mat4 initialTransformation;
-    
+
     std::vector<MeshEntry>  m_Entries;
-    
+
     Mesh();
-    
-    ~Mesh();
-    
+
     /*
      * Use this loadMesh to load a static mesh to be displayed with the standard Phong-based illumination model
      */
@@ -83,12 +81,12 @@ public:
      * Use this loadMesh to load a static 3D mesh in order to be displayed with the advanced PRT illumination model
      */
     bool loadMesh(const std::string& filename, bool shadowed, glm::vec3 rotation, glm::vec3 position, float scale, bool fullyOptimised);
-    
-    void        render();
-    
+
+    void render();
+
     //GLuint                      m_Buffers[4];
     //GLuint                      m_VAO;
-    std::vector<Texture*>       m_Textures;
+    std::vector<Texture>        m_Textures;
     std::vector<GLuint>         m_TextureSamplers;
     std::vector<glm::vec3>      Positions;
     std::vector<glm::vec3>      Colors;
@@ -96,12 +94,12 @@ public:
     std::vector<glm::vec2>      TexCoords;
 	std::vector<glm::vec3>		Tangents;
     std::vector<unsigned int>   Indices;
-    
-    unsigned int numVertices ;
-    unsigned int numIndices ;
-    
+
+    unsigned int numVertices;
+    unsigned int numIndices;
+
 private:
-    
+
     bool initFromScene(const aiScene* pScene, const std::string& filename);
     void initMesh(const aiMesh* paiMesh,
                   std::vector<glm::vec3>& positions,
@@ -111,9 +109,7 @@ private:
 				  std::vector<glm::vec3>& tangents
                   );
     bool initMaterials(const aiScene* pScene, const std::string& filename);
-    void clear();
 
-    
 
 #ifndef INDEX_BUFFER
 #define INDEX_BUFFER        0
@@ -133,7 +129,7 @@ private:
 #ifndef COLOR_VB
 #define COLOR_VB			5
 #endif
-   
+
 }; // end class Mesh
 
 
