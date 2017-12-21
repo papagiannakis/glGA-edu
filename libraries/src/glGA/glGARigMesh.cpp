@@ -65,7 +65,20 @@ void RigMesh::clear()
 {
     m_Textures.clear();
 
-    delete m_pScene;
+    // Deleting the scene (although correct) may cause compilation errors, due to the fact that ASSIMP simply declares,
+    // but (incorrectly?) doesn't define a destructor for aiScene.
+    //
+    // A workaround would be to provide a default destructor for aiScene by changing:
+    //     ASSIMP_API ~aiScene();
+    // to:
+    //     ASSIMP_API ~aiScene() = default;
+    // in the declaration of class aiScene (see 'assimp/scene.h', line 384). However, that would still cause memory leaks,
+    // since the aiNode pointed to by 'mRootNode' would not be properly deleted.
+    //
+    // In any case, providing a proper destructor for aiScene is a responsibility of the ASSIMP developers, so not
+    // deleting the scene in RigMesh is the most sane thing to do at the moment.
+    //
+//  delete m_pScene;
     m_pScene = nullptr;
     m_Importer = nullptr;
 }//end clear()
