@@ -335,22 +335,22 @@ void Mesh::initMesh(const aiMesh* paiMesh,
         const aiVector3D* pTexCoord = paiMesh->HasTextureCoords(0) ? &(paiMesh->mTextureCoords[0][i]) : &zero3D;
 		const aiVector3D* pTangent  = &(paiMesh->mTangents[i]);
 
-        positions.emplace_back(glm::vec3(pPos->x, pPos->y, pPos->z));
+        positions.emplace_back(pPos->x, pPos->y, pPos->z);
         if (paiMesh->HasNormals())
         {
             if(pNormal!=nullptr)
             {
                 vec4 normal(pNormal->x, pNormal->y, pNormal->z, 1.0);
-                normals.emplace_back(glm::vec3(normal[0], normal[1], normal[2]));
+                normals.emplace_back(normal[0], normal[1], normal[2]);
             }
         }
 
-        texCoords.emplace_back(glm::vec2(pTexCoord->x,pTexCoord->y));
+        texCoords.emplace_back(pTexCoord->x,pTexCoord->y);
 
         if (paiMesh->HasTangentsAndBitangents())
         {
             if (pTangent!=nullptr)
-                tangents.emplace_back(glm::vec3(pTangent->x, pTangent->y, pTangent->z));
+                tangents.emplace_back(pTangent->x, pTangent->y, pTangent->z);
         }
     }
 
@@ -399,7 +399,7 @@ bool Mesh::initMaterials(const aiScene* pScene, const std::string& filename)
         if (pMaterial->GetTextureCount(aiTextureType_DIFFUSE)) {
             if (pMaterial->GetTexture(aiTextureType_DIFFUSE, 0, &path, nullptr, nullptr, nullptr, nullptr, nullptr) == AI_SUCCESS) {
                 fullPath = dir + "/" + path.data;
-                m_Textures.emplace_back(Texture(GL_TEXTURE_2D, fullPath));
+                m_Textures.emplace_back(GL_TEXTURE_2D, fullPath);
 
                 if (!m_Textures.back().loadTexture()) {
                     std::cout << "Error Loading texture: " << fullPath << std::endl;
@@ -441,7 +441,7 @@ void Mesh::render()
         glDrawElementsBaseVertex(GL_TRIANGLES,
                                  pEntry.numIndices,
                                  GL_UNSIGNED_INT,
-                                 reinterpret_cast<void*>(sizeof(unsigned int) * pEntry.baseIndex),
+                                 reinterpret_cast<void*>(sizeof(pEntry.baseIndex) * pEntry.baseIndex),
                                  pEntry.baseVertex);
 
 #else
