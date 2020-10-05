@@ -1,0 +1,19 @@
+Info,  T0: Load quad.obj
+Debug, T0: Assimp 3.1.134183800 amd64 gcc debug noboost shared singlethreaded
+Info,  T0: Found a matching importer for this file format
+Info,  T0: Import root directory is './'
+Error, T0: OBJ: failed to locate material (null), skipping
+Info,  T0: Entering post processing pipeline
+Debug, T0: FlipUVsProcess begin
+Debug, T0: FlipUVsProcess finished
+Debug, T0: TriangulateProcess begin
+Debug, T0: TriangulateProcess finished. There was nothing to be done.
+Debug, T0: SortByPTypeProcess begin
+Info,  T0: Points: 0, Lines: 0, Triangles: 1, Polygons: 0 (Meshes, X = removed)
+Debug, T0: SortByPTypeProcess finished
+Debug, T0: Generate spatially-sorted vertex cache
+Debug, T0: GenVertexNormalsProcess begin
+Info,  T0: GenVertexNormalsProcess finished. Vertex normals have been calculated
+Debug, T0: CalcTangentsProcess begin
+Info,  T0: CalcTangentsProcess finished. Tangents have been calculated
+Info,  T0: Leaving post processing pipeline

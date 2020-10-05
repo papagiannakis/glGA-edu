@@ -1,0 +1,19 @@
+DVD CD disc
+
+
+NOTE: 
+-
+
+
+vertices:	1000	
+Faces:		2000
+
+object:		grouped single meshes
+materials:	SCANLINE
+MAT-lib:	DVD_CD.MAT
+
+
+by M.B.Schneider / mindcandy.at
+contact: mbs@mindcandy.at
+
+modeled: 	08/2009

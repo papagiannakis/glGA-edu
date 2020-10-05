@@ -1,0 +1,25 @@
+{
+   "driver_null" : {
+      "displayFrequency" : 90,
+      "enable" : true,
+      "id" : "Null Driver",
+      "modelNumber" : "Null Model Number",
+      "renderHeight" : 1512,
+      "renderWidth" : 1344,
+      "secondsFromVsyncToPhotons" : 0.10000000000000001,
+      "serialNumber" : "Null 4711",
+      "windowHeight" : 1080,
+      "windowWidth" : 1920,
+      "windowX" : 100,
+      "windowY" : 100
+   },
+   "jsonid" : "vrsettings",
+   "notifications" : {
+      "DoNotDisturb" : false
+   },
+   "steamvr" : {
+      "forcedDriver" : "null",
+      "showMirrorView" : false
+   },
+   "version" : "1"
+}
