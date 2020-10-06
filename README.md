@@ -26,6 +26,7 @@ glGA page: (http://george.papagiannakis.org/?page_id=513)
 * Bachlitzanakis Vasileios
 * Evangellou Yannis
 * Kartsonaki Ioanna
+* Kamarianakis Manos
 
 ### Release notes:
 -----------------------------------------
