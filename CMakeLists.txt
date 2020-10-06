@@ -50,12 +50,6 @@ include_directories (				libraries/include
 
 # Sub-directories where more CMakeLists.txt exist
 add_subdirectory(libraries)
-add_subdirectory(applications/glGACharacterApp)
-add_subdirectory(applications/CGA-SHVisulization)
-add_subdirectory(applications/Monte_Carlo)
-add_subdirectory(applications/SHrotations)
-add_subdirectory(assignments)
-add_subdirectory(basic)
 add_subdirectory(examples)
 add_subdirectory (openvr)
 
