@@ -30,7 +30,7 @@ glGA page: (http://george.papagiannakis.org/?page_id=513)
 
 ### Release notes:
 -----------------------------------------
-#### Version glGA5.0
+#### Version glGA5.0.1
 
 Novelties include:
 * PRT, KDTree libraries for PRT rendering, KDTree visualization
