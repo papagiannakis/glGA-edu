@@ -2,6 +2,12 @@
 
 ## @Copyright George Papagiannakis, 2012-2017, University of Crete & FORTH ##
 
+
+### Read carefully before proceeding
+* Always work on the dev branch of the repo (on the Code tab, if the main branch is selected instead, click and choose dev).
+* You may download a copy of this repo by clicking the green Code button on the Code tab and then select Download zip. Make sure you have selected the dev branch first!
+* In case you find any errors you may open an Issue, in the Issues tab. Describe the problem and the required steps to replicate it. Again make sure you are working on the dev branch!
+
 ### License is provided in the license.txt ###
 
 ## glGA is described here: 
