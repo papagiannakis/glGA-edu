@@ -1,6 +1,6 @@
 # glGA Geometric Application framework for modern Shader-Based OpenGL #
 
-## @Copyright George Papagiannakis, 2012-2017, University of Crete & FORTH ##
+## @Copyright George Papagiannakis, 2012-2020, University of Crete & FORTH ##
 
 
 ### Read carefully before proceeding
