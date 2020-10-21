@@ -1,0 +1,58 @@
+Info,  T0: Load ../../_glGA-data/data/models/astroBoy_walk3.dae
+Debug, T0: Assimp 4.1.0 amd64 gcc debug shared singlethreaded
+Info,  T0: Found a matching importer for this file format: Collada Importer.
+Info,  T0: Import root directory is '../../_glGA-data/data/models/'
+Debug, T0: Collada schema version is 1.4.n
+Debug, T0: UpdateImporterScale scale set: %f1
+Debug, T0: ValidateDataStructureProcess begin
+Debug, T0: ValidateDataStructureProcess end
+Info,  T0: Entering post processing pipeline
+Debug, T0: FlipUVsProcess begin
+Debug, T0: FlipUVsProcess finished
+Debug, T0: RemoveRedundantMatsProcess begin
+Info,  T0: RemoveRedundantMatsProcess finished. Removed 0 redundant and 1 unused materials.
+Debug, T0: GenUVCoordsProcess begin
+Debug, T0: GenUVCoordsProcess finished
+Debug, T0: TransformUVCoordsProcess begin
+Debug, T0: TransformUVCoordsProcess finished
+Debug, T0: PretransformVerticesProcess begin
+Debug, T0: PretransformVerticesProcess finished
+Info,  T0: Removed 69 nodes and 1 animation channels (6 output nodes)
+Info,  T0: Kept 1 lights and 0 cameras.
+Info,  T0: Moved 8 meshes to WCS (number of output meshes: 4)
+Debug, T0: TriangulateProcess begin
+Debug, T0: TriangulateProcess finished. There was nothing to be done.
+Debug, T0: FindDegeneratesProcess begin
+Debug, T0: FindDegeneratesProcess finished
+Debug, T0: SortByPTypeProcess begin
+Info,  T0: Points: 0, Lines: 0, Triangles: 4, Polygons: 0 (Meshes, X = removed)
+Debug, T0: SortByPTypeProcess finished
+Debug, T0: FindInvalidDataProcess begin
+Debug, T0: FindInvalidDataProcess finished. Everything seems to be OK.
+Debug, T0: OptimizeMeshesProcess begin
+Debug, T0: OptimizeMeshesProcess finished
+Debug, T0: SplitLargeMeshesProcess_Triangle begin
+Debug, T0: SplitLargeMeshesProcess_Triangle finished. There was nothing to do
+Debug, T0: Generate spatially-sorted vertex cache
+Debug, T0: GenVertexNormalsProcess begin
+Debug, T0: GenVertexNormalsProcess finished. Normals are already there
+Debug, T0: CalcTangentsProcess begin
+Info,  T0: CalcTangentsProcess finished. Tangents have been calculated
+Debug, T0: JoinVerticesProcess begin
+Debug, T0: Mesh 0 (skin219) | Verts in: 2970 out: 837 | ~71.8182%
+Debug, T0: Mesh 1 (skin219) | Verts in: 72 out: 28 | ~61.1111%
+Debug, T0: Mesh 2 (skin219) | Verts in: 3354 out: 947 | ~71.7651%
+Debug, T0: Mesh 3 (skin219) | Verts in: 8247 out: 2417 | ~70.6924%
+Info,  T0: JoinVerticesProcess finished | Verts in: 14643 out: 4229 | ~71.1193
+Debug, T0: SplitLargeMeshesProcess_Vertex begin
+Debug, T0: SplitLargeMeshesProcess_Vertex finished. There was nothing to do
+Debug, T0: LimitBoneWeightsProcess begin
+Debug, T0: LimitBoneWeightsProcess end
+Debug, T0: ImproveCacheLocalityProcess begin
+Debug, T0: Mesh %u | ACMR in: 0 out: 1.65051 | ~0.9969739.5961
+Debug, T0: Mesh %u | ACMR in: 1 out: 1.16667 | ~1.166670
+Debug, T0: Mesh %u | ACMR in: 2 out: 1.40519 | ~0.98837229.6626
+Debug, T0: Mesh %u | ACMR in: 3 out: 1.44052 | ~0.98763231.4394
+Info,  T0: Cache relevant are 4 meshes (4881 faces). Average output ACMR is 0.990576
+Debug, T0: ImproveCacheLocalityProcess finished. 
+Info,  T0: Leaving post processing pipeline
