@@ -6,7 +6,6 @@
 //  Copyright (c) 2012 University Of Crete & FORTH. All rights reserved.
 //
 
-//Marios Kanakis - 22/06/2016 
 //Implementing basicGUI with SDL2 + ImGUI + OpenGL 
 
 //Credits for the Music: http://www.bensound.com/royalty-free-music

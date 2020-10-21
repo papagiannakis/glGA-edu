@@ -118,12 +118,14 @@ bool	init()
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
 
+		SDL_SetHint(SDL_HINT_MAC_CTRL_CLICK_EMULATE_RIGHT_CLICK, "1");
+
 
 		//Create Window
 		SDL_DisplayMode current;
 		SDL_GetCurrentDisplayMode(0, &current);
 
-		gWindow = SDL_CreateWindow("Geometry shader example!", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_OPENGL);
+		gWindow = SDL_CreateWindow("Geometry shader example!", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_OPENGL | SDL_WINDOW_ALLOW_HIGHDPI );
 		if (gWindow == NULL)
 		{
 			std::cout << "Window could not be created! SDL Error: " << SDL_GetError() << std::endl;
@@ -328,7 +330,7 @@ void	displayGui()
 
 	//Sets the Window size
 	ImGui::SetNextWindowSize(ImVec2(400, 160), ImGuiSetCond_FirstUseEver);
-	ImGui::SetNextWindowPos(ImVec2(10, 0));
+	//ImGui::SetNextWindowPos(ImVec2(10, 0));
 	ImGui::Begin("basicGeometry GUI");
 	static float f = 0.0f;
 
