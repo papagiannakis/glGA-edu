@@ -97,10 +97,13 @@ Any third party libraries you are using place them under the _thirdPartyLibs(bin
 
 
 # General Information/Requirements.
-============================================================
+
 Hardware: 
-  * OpenGL 3.2 and up
+
+* OpenGL 3.2 and up
+
 Software:
+
 * CMake Minimum version required 3.5
 Download the latest one for your platform from : https://cmake.org/download/
 
@@ -114,9 +117,26 @@ Before compiling your examples you need to decide the OpenGL version
 # Important: Follow the platform-specific instructions (according to your OS) and then install and setup Visual Studio Code as shown in the end of this tutorial. 
 
 
-# OSX
+# Visual Studio Code (All Platforms).
 ============================================================
-Running via Visual Studio Code is recommended. To run via XCode instead, please navigate to "Appendix" at the end of this file.
+Follow the steps below, after you complete some necessary steps 
+depending on your OS.
+
+1. Run Visual Studio Code.
+2. Navigate to "View" menu and then choose "Extensions".
+3. Find and install the following two extensions:
+    1. C++ extension for VS Code. Install the C/C++ extension by searching for ‘c++’ in the Extensions view.
+    2. CMake Tools extension for VS Code. Install this extension by searching for ‘CMake tools’ in the Extensions view.
+4. In VS Code, click on the Explorer button (first button on the left column) and then click “Open Folder” and navigate to the glGA folder.
+5. Navigate to "View" menu and choose "Command Palette" and run “CMake: Select a Kit”. The extension will automatically scan for kits on your computer and create a list of compilers found on your system.
+6. Select the compiler of your choice.
+7. In the bottom bar of VS code (blue one), make sure that the project is in Debug mode (something like: Cmake:[Debug]:Ready).
+8. Click the build button in the same line.
+9. In the same bottom line, the build target must be [all] and the run target must be the project you wish to run.
+10. Click the “Debug” button (the one with the bug).
+
+# NECESSARY STEPS FOR OSX
+============================================================
 
 Step 1
 ----------------
@@ -148,8 +168,8 @@ Install macports (download it from : https://www.macports.org/)
 then open up a terminal and type: sudo port install boost
 
 
-# Windows
-============================================================
+# NECESSARY STEPS FOR WINDOWS
+
 Tested with Visual Studio Code 1.49.2
 
 Step 1
@@ -222,8 +242,8 @@ For Windows GA_VERSOR and CGA_VERSOR are currently not supported!
 
 When changing animation interpolation method first build glGAMath and then glGA library.
 
-# Linux
-==============================================================
+# NECESSARY STEPS FOR LINUX
+
 Step 1
 --------------
 Open up a terminal (ctrl + alt + t). 
@@ -291,22 +311,6 @@ Installation of Image Magick (if you need it otherwise it is included in the fra
 
 Download from Ubuntu Software Center and use -lMagick++ in Makefiles. It is installed in usr/lib and usr/include/ImageMagick.
 
-
-# Visual Studio Code (All Platforms).
-============================================================
-
-a. Run Visual Studio Code.
-b. Navigate to "View" menu and then choose "Extensions".
-c. Find and install the following two extensions:
-    1. C++ extension for VS Code. Install the C/C++ extension by searching for ‘c++’ in the Extensions view.
-    2. CMake Tools extension for VS Code. Install this extension by searching for ‘CMake tools’ in the Extensions view.
-d. In VS Code, click on the Explorer button (first button on the left column) and then click “Open Folder” and navigate to the glGA folder.
-e. Navigate to "View" menu and choose "Command Palette" and run “CMake: Select a Kit”. The extension will automatically scan for kits on your computer and create a list of compilers found on your system.
-f. Select the compiler of your choice.
-g. In the bottom bar of VS code (blue one), make sure that the project is in Debug mode (something like: Cmake:[Debug]:Ready).
-h. Click the build button in the same line.
-i. In the same bottom line, the build target must be [all] and the run target must be the project you wish to run.
-j. Click the “Debug” button (the one with the bug).
 
 
 
