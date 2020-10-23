@@ -157,13 +157,19 @@ bool			initSDL()
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
 
+#ifdef __APPLE__
 		SDL_SetHint(SDL_HINT_MAC_CTRL_CLICK_EMULATE_RIGHT_CLICK, "1");
-
+#endif
 		//Create Window
 		SDL_DisplayMode current;
 		SDL_GetCurrentDisplayMode(0, &current);
 
+#ifdef __APPLE__
 		gWindow = SDL_CreateWindow("chapter10", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, windowWidth, windowHeight, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI );
+#else
+		gWindow = SDL_CreateWindow("chapter10", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, windowWidth, windowHeight, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
+#endif
+		
 		if (gWindow == NULL)
 		{
 			std::cout << "Window could not be created! SDL Error: " << SDL_GetError() << std::endl;
@@ -749,6 +755,11 @@ int main (int argc, char * argv[])
 	glm::vec3 right = glm::vec3(sin(horizAngle - 3.14f / 2.0f), 0, cos(horizAngle - 3.14f / 2.0f));
 	glm::vec3 up = glm::cross(right, direction);
 
+#ifdef __APPLE__
+	int *w = (int*)malloc(sizeof(int));
+	int *h = (int*)malloc(sizeof(int));
+#endif
+
 	while (running) {
 		if (camera == true)
 		{
@@ -821,6 +832,12 @@ int main (int argc, char * argv[])
 		SDL_GL_MakeCurrent(gWindow, gContext);
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 		SDL_GL_SwapWindow(gWindow);
+#ifdef __APPLE__
+		if(w!=NULL && h!=NULL){
+			SDL_GL_GetDrawableSize(gWindow, w, h);
+			resize_window(*w, *h);
+		}
+#endif
 	}
 
 	//close OpenGL window and  terminate ImGui and SDL2

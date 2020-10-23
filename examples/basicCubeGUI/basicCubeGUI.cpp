@@ -160,8 +160,9 @@ bool	init()
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
 
+#ifdef __APPLE__
 		SDL_SetHint(SDL_HINT_MAC_CTRL_CLICK_EMULATE_RIGHT_CLICK, "1");
-
+#endif
 		//Initialize SDL_mixer
 		if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
 		{
@@ -175,7 +176,12 @@ bool	init()
 		SDL_DisplayMode current;
 		SDL_GetCurrentDisplayMode(0, &current);
 
+#ifdef __APPLE__
 		gWindow = SDL_CreateWindow("ImGui + SDL2 + OpenGL4 example", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_OPENGL | SDL_WINDOW_ALLOW_HIGHDPI );
+#else
+		gWindow = SDL_CreateWindow("ImGui + SDL2 + OpenGL4 example", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_OPENGL);
+#endif
+		
 		if (gWindow == NULL)
 		{
 			std::cout << "Window could not be created! SDL Error: " << SDL_GetError() << std::endl;
