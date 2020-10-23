@@ -113,12 +113,16 @@ Download Visual Studio (VS) Code from : https://code.visualstudio.com
 Before compiling your examples you need to decide the OpenGL version
 -Version of OpenGL (2.1 or 3.2 and later) as defined in each example:
     - uncomment the USE_OPENGL21 or USE_OPENGL32 respectively (only one of them should be active)
+
+
     
-# Important: Follow the platform-specific instructions (according to your OS) and then install and setup Visual Studio Code as shown in the end of this tutorial. 
+# Installation instructions:
+
+**Important** Follow the platform-specific instructions (according to your OS) and then install and setup Visual Studio Code as shown in the end of this tutorial. 
 
 
-# Visual Studio Code (All Platforms).
-============================================================
+## Visual Studio Code (All Platforms).
+
 Follow the steps below, after you complete some necessary steps 
 depending on your OS.
 
@@ -135,8 +139,8 @@ depending on your OS.
 9. In the same bottom line, the build target must be [all] and the run target must be the project you wish to run.
 10. Click the “Debug” button (the one with the bug).
 
-# NECESSARY STEPS FOR OSX
-============================================================
+
+## NECESSARY STEPS FOR OSX
 
 Step 1
 ----------------
@@ -168,7 +172,7 @@ Install macports (download it from : https://www.macports.org/)
 then open up a terminal and type: sudo port install boost
 
 
-# NECESSARY STEPS FOR WINDOWS
+## NECESSARY STEPS FOR WINDOWS
 
 Tested with Visual Studio Code 1.49.2
 
@@ -242,7 +246,7 @@ For Windows GA_VERSOR and CGA_VERSOR are currently not supported!
 
 When changing animation interpolation method first build glGAMath and then glGA library.
 
-# NECESSARY STEPS FOR LINUX
+## NECESSARY STEPS FOR LINUX
 
 Step 1
 --------------
@@ -294,7 +298,7 @@ or navigate to Assignments1 folder and hit make which will build just Assignment
 make clean removes all executables.
 
 * Notes:
-==============================
+
 1. All executables are build into the folders where the source files are located.
 e.g. Assignment1.exe is inside glGA/assignments/Assignment1/
 2. Depending on your GPU and how powerfull it is, you may need to change multisampling in 
@@ -315,7 +319,9 @@ Download from Ubuntu Software Center and use -lMagick++ in Makefiles. It is inst
 
 
 
-# Appendix: Running glGA via Xcode #
+# Appendix
+
+## Running glGA via Xcode 
 
 In case you would like to run glGA through Xcode on OSX (Xcode + CMake needed). 
 ----------------
