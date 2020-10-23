@@ -118,12 +118,13 @@ Before compiling your examples you need to decide the OpenGL version
     
 # Installation instructions:
 
-**Important** Follow the platform-specific instructions (according to your OS) and then install and setup Visual Studio Code as shown in the end of this tutorial. 
+**Important** Follow the platform-specific step depending to your OS and then install and setup Visual Studio Code as shown in the end of this tutorial. 
 
+**The usage of Visual Studio Code is strongly encouraged against any other method.**
 
 ## Visual Studio Code (All Platforms).
 
-Follow the steps below, after you complete some necessary steps 
+Follow the steps below, after you complete the necessary steps 
 depending on your OS.
 
 1. Run Visual Studio Code.
@@ -183,6 +184,8 @@ then update the PATH enviroment variable with the path where glGA third party li
 example:
 GLGA = C:\Users\MK\Desktop\glGA-5.0
 PATH = %PATH%;%GLGA%\_thirdPartyLibs\lib\Windows;
+
+*Compiler needs to be Visual Studio 2019 Community Realease - x86.*
 
 Step 2 [Optional] (Build Assimp in Windows  (if you need it otherwise it is included in the framework))
 ----------------------------
