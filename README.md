@@ -58,6 +58,10 @@ glGA libraries and provided examples
 6. basicCube - simple 3D cube with color per vertex
 7. basicCubeGUI - previous 3D cube with an AntTweakBar GUI
 
+#### Known Issues:
+
+During the first Visual Studio Code build, assimp may not be detected. In this case, simply try building the project once again.
+
 
 #### OpenGL Shading Language, Third Edition: https://wiki.labomedia.org/images/1/10/Orange_Book_-_OpenGL_Shading_Language_2nd_Edition.pdf 
 * Chapter9:  Fog simulation
