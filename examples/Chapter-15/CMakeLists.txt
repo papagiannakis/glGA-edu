@@ -86,7 +86,6 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 										${IMGUI}
 										${SDL2_LIBRARY}
 										${SDLMIXER_LIBRARY}
-										${OpenCV_LIBS}
 										${Boost_LIBRARIES}
 										${GLEW32}
 										${ASSIMP}

@@ -59,7 +59,6 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 	
 	find_package (SDL2 REQUIRED)
 	find_package (SDL2_mixer REQUIRED)
-	find_package (OpenCV REQUIRED)
 	find_package (Boost REQUIRED)
 	
 	include_directories (${SDL2_INCLUDE_DIR})
