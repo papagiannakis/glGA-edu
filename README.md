@@ -5,7 +5,6 @@
 
 ### Read carefully before proceeding
 * Always work on the dev branch of the repo (on the Code tab, if the main branch is selected instead, click and choose dev).
-* You may download a copy of this repo by clicking the green Code button on the Code tab and then select Download zip. Make sure you have selected the dev branch first!
 * In case you find any errors you may open an Issue, in the Issues tab. Describe the problem and the required steps to replicate it. Again make sure you are working on the dev branch!
 
 ### License is provided in the license.txt ###
@@ -60,8 +59,8 @@ glGA libraries and provided examples
 
 #### Known Issues:
 
-During the first Visual Studio Code build, assimp may not be detected. In this case, simply try building the project once again.
-
+1. During the first Visual Studio Code build, assimp may not be detected. In this case, simply try building the project once again.
+2. There have been reports that the command "codesign -f -s - SDL2_mixer", may fail if you try to use it with the latest version of SDL2 mixer. In case that happens, please download and install an older version of SDL2 mixer (for instance: https://www.libsdl.org/projects/SDL_mixer/release/SDL2_mixer-2.0.0.dmg) 
 
 #### OpenGL Shading Language, Third Edition: https://wiki.labomedia.org/images/1/10/Orange_Book_-_OpenGL_Shading_Language_2nd_Edition.pdf 
 * Chapter9:  Fog simulation
@@ -115,6 +114,13 @@ Before compiling your examples you need to decide the OpenGL version
     - uncomment the USE_OPENGL21 or USE_OPENGL32 respectively (only one of them should be active)
 
 
+# How to get glGA-edu through GitHub:
+You can get glGA-edu through GitHub by using Sourcetree (https://www.sourcetreeapp.com).
+Simply follow the instructions shown in this video: https://elearn.uoc.gr/pluginfile.php/224876/mod_resource/content/1/HY358_glGA_installation_tutorial.mp4
+
+Finally, after cloning the repository successfully, make sure that your are on the dev branch (as shown in the video) and then:
+    1. Navigate to the Repository menu and choose Git LFS --> Fetch LFS Content.
+    2. Navigate to the Repository menu and choose Git LFS --> Pull LFS Content.
     
 # Installation instructions:
 
@@ -147,7 +153,11 @@ Step 1
 ----------------
 install Xcode command line tools from terminal : xcode-select --install
 
-Step 2 (SDL2)
+Step 2
+----------------
+Make sure CMake is installed as mentioned in "General Information/Requirements" section above.
+
+Step 3 (SDL2)
 -----------------
 A. Download from Development Libraries -> Mac OS X -> SDL2-2.0.x.dmg  
 https://www.libsdl.org/download-2.0.php#source 
@@ -157,7 +167,7 @@ B. Open the .dmg file , press command+shift+g navigate to /Library/Frameworks an
 C. Open up a terminal and navigate to : /Library/Frameworks/SDL2.framework
 then sign the framework using the command: "codesign -f -s - SDL2"
 
-Step 3 (SDL2_mixer)
+Step 4 (SDL2_mixer)
 -----------------
 A. Download from Development Libraries -> Mac OS X -> SDL2_mixer-2.0.x.dmg
 https://www.libsdl.org/projects/SDL_mixer/
@@ -166,7 +176,7 @@ B. C. Same as above!
 
 TIP: Sign the SDL2_mixer framework with the command: "codesign -f -s - SDL2_mixer"
 
-Step 3 (read below only if the provided, precompiled boost library do not work for you)
+Step 5 (read below only if the provided, precompiled boost library do not work for you)
 ----------------
 Install macports (download it from : https://www.macports.org/)
 
@@ -187,7 +197,12 @@ PATH = %PATH%;%GLGA%\_thirdPartyLibs\lib\Windows;
 
 *Compiler needs to be Visual Studio 2019 Community Realease - x86.*
 
-Step 2 [Optional] (Build Assimp in Windows  (if you need it otherwise it is included in the framework))
+Step 2
+--------------
+Make sure CMake is installed as mentioned in "General Information/Requirements" section above.
+
+
+Step 3 [Optional] (Build Assimp in Windows  (if you need it otherwise it is included in the framework))
 ----------------------------
 Download and install Cmake (we are going to use cmake-gui): http://www.cmake.org/cmake/resources/software.html
 Download and install DirectX sdk
@@ -219,13 +234,13 @@ You are going to need the following files and folders:
 2) G:\Libraries\assimp-master\cmake_build\contrib\zlib\Release\zlibstatic.lib
 3) G:\Libraries\assimp-master\cmake_build\include\
 
-Step 3 [Optional] (Precomputed Radiance Transfer)
+Step 4 [Optional] (Precomputed Radiance Transfer)
 --------------
 
 For building glGA with PRT support:
 In Solution exproler go to glGA properties then Configuration Properties->C/C++->Preprocessor. In Preprocessor Definitions at ;USE_PRT=1
 
-Step 4 [Optional] (Animation Interpolation)
+Step 5 [Optional] (Animation Interpolation)
 ----------------
 Select Animation Interpolation in glGAMath.h by setting the INTERPOLATION. You can select one of the following:
 
