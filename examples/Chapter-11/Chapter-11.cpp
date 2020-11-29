@@ -158,7 +158,7 @@ bool			initSDL()
 #ifdef __APPLE__
 		gWindow = SDL_CreateWindow("Chapter11", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, windowWidth, windowHeight, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI );
 #else
-		gWindow = SDL_CreateWindow("chapter10", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, windowWidth, windowHeight, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
+		gWindow = SDL_CreateWindow("chapter11", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, windowWidth, windowHeight, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
 #endif
 
 		if (gWindow == NULL)
