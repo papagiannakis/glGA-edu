@@ -95,6 +95,7 @@ glm::vec3 pos = glm::vec3( 3.0f, 4.0f , 10.0f );
 
 float horizAngle = 3.14f;
 float verticAngle = 0.0f;
+int   divideFactor = 2;
 
 
 float speedo = 9.0f;
@@ -256,6 +257,7 @@ bool			initSDL()
 
 #ifdef __APPLE__
 		gWindow = SDL_CreateWindow("Chapter-9", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, windowWidth, windowHeight, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI );
+		divideFactor = 4;
 #else
 		gWindow = SDL_CreateWindow("Chapter-9", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, windowWidth, windowHeight, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
 #endif		
@@ -352,13 +354,13 @@ bool			event_handler(SDL_Event* event)
 			if (camera == false)
 			{
 				camera = true;
-				SDL_WarpMouseInWindow(gWindow, windowWidth / 2, windowHeight / 2);
+				SDL_WarpMouseInWindow(gWindow, windowWidth / divideFactor, windowHeight / divideFactor);
 				SDL_GetMouseState(&xpos, &ypos);
 			}
 			else
 			{
 				camera = false;
-				SDL_WarpMouseInWindow(gWindow, windowWidth / 2, windowHeight / 2);
+				SDL_WarpMouseInWindow(gWindow, windowWidth / divideFactor, windowHeight / divideFactor);
 				SDL_GetMouseState(&xpos, &ypos);
 			}
 			return true;
@@ -1587,12 +1589,12 @@ int main (int argc, char * argv[])
 		if(camera == true)
 		{
 			SDL_GetMouseState(&xpos, &ypos);
-			SDL_WarpMouseInWindow(gWindow, windowWidth / 2, windowHeight / 2);
+			SDL_WarpMouseInWindow(gWindow, windowWidth / divideFactor, windowHeight / divideFactor);
 			//glfwGetMousePos(&xpos,&ypos);
 			//glfwSetMousePos(windowWidth/2, windowHeight/2);
 		
-			horizAngle  += mouseSpeedo * float(windowWidth/2 - xpos );
-			verticAngle += mouseSpeedo * float( windowHeight/2 - ypos );
+			horizAngle  += mouseSpeedo * float(windowWidth/divideFactor - xpos );
+			verticAngle += mouseSpeedo * float( windowHeight/divideFactor - ypos );
 		}
 
 
