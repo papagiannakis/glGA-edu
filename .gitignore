@@ -77,6 +77,44 @@ examples/Chapter-11/Chapter-11
 examples/Chapter-12/Chapter-12
 examples/Chapter-13/Chapter-13
 examples/Chapter-14/Chapter-14
+examples/basicCube/basicCube
+examples/basicCube/basicCube.pdb
+examples/basicCubeGUI/basicCubeGUI.pdb
+examples/basicGeometry/basicGeometry
+examples/basicShading/basicShading
+examples/basicTesselation/basicTesselation
+examples/basicTriangle/basicTriangle
+examples/basicTriangle/basicTriangle.pdb
+examples/basicWindow/basicWindow
+examples/basicWindow/basicWindow.pdb
+examples/Chapter-09/Chapter-09
+examples/Chapter-09/Chapter-09.pdb
+examples/Chapter-10/Chapter-10
+examples/Chapter-10/Chapter-10.pdb
+examples/Chapter-11/Chapter-11
+examples/Chapter-11/Chapter-11.pdb
+examples/Chapter-12/Chapter-12
+examples/Chapter-12/Chapter-12.pdb
+examples/Chapter-13/Chapter-13
+examples/Chapter-13/Chapter-13.pdb
+examples/Chapter-14/Chapter-14
+examples/Chapter-14/Chapter-14.pdb
+examples/Chapter-15/Chapter-15
+examples/Chapter-15/Chapter-15.pdb
+examples/Chapter-16/Chapter-16
+examples/Chapter-16/Chapter-16.pdb
+examples/Chapter-17/Chapter-17
+examples/Chapter-17/Chapter-17.pdb
+examples/Chapter-18/Chapter-18
+examples/Chapter-18/Chapter-18.pdb
+examples/Chapter-19/Chapter-19
+examples/Chapter-19/Chapter-19.pdb
+examples/DeferredShading/DeferredShading
+examples/RayTracing/RayTracing
+libraries/lib/libglGA.a
+libraries/lib/libglGAMath.a
+libraries/lib/libKDTree.a
+libraries/lib/libPRT.a
 
 #vscode
 .vscode
@@ -233,3 +271,4 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
+
