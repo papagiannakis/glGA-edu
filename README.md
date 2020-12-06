@@ -26,12 +26,14 @@ glGA page: (http://george.papagiannakis.org/?page_id=513)
 * Kateros         	Stavros
 * Lydatakis       	Nikolaos
 * Papaefthymiou   	Margarita
-* Kanakis         Marios
+* Kanakis           Marios
 * Geronikolakis		Stratos
-* Bachlitzanakis Vasileios
-* Evangellou Yannis
-* Kartsonaki Ioanna
-* Kamarianakis Manos
+* Bachlitzanakis    Vasileios
+* Evangellou        Yannis
+* Kartsonaki        Ioanna
+* Kamarianakis      Manos
+* Stefanidi         Zina
+* Stefanidi         Eleni
 
 ### Release notes:
 -----------------------------------------
