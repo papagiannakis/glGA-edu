@@ -163,6 +163,7 @@ struct MaterialProperties *frontMaterial;
 int				    maxLights = 0;                  // maximum number of dynamic lights allowed by the graphic card
 Lights			   *lights = NULL;						// array of lights
 MaterialProperties *materials = NULL;
+int 				divideFactor = 2;
 
 GLuint FBO;
 GLuint ShadowMap;
@@ -213,6 +214,7 @@ bool			initSDL()
 
 #ifdef __APPLE__
 		gWindow = SDL_CreateWindow("Chapter13", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, windowWidth, windowHeight, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI );
+		divideFactor = 4;
 #else
 		gWindow = SDL_CreateWindow("Chapter13", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, windowWidth, windowHeight, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
 #endif
@@ -310,14 +312,14 @@ bool			event_handler(SDL_Event* event)
 			{
 				camera = true;
 				SDL_GetMouseState(&xpos, &ypos);
-				SDL_WarpMouseInWindow(gWindow, windowWidth / 2, windowHeight / 2);
+				SDL_WarpMouseInWindow(gWindow, windowWidth / divideFactor, windowHeight / divideFactor);
 				SDL_ShowCursor(0);
 			}
 			else
 			{
 				camera = false;
 				SDL_GetMouseState(&xpos, &ypos);
-				SDL_WarpMouseInWindow(gWindow, windowWidth / 2, windowHeight / 2);
+				SDL_WarpMouseInWindow(gWindow, windowWidth / divideFactor, windowHeight / divideFactor);
 				SDL_ShowCursor(1);
 			}
 			return true;
@@ -1326,11 +1328,11 @@ int main (int argc, char * argv[])
 		if(camera == true)
 		{
 			SDL_GetMouseState(&xpos, &ypos);
-			SDL_WarpMouseInWindow(gWindow, windowWidth / 2, windowHeight / 2);
+			SDL_WarpMouseInWindow(gWindow, windowWidth / divideFactor, windowHeight / divideFactor);
 			//SDL_ShowCursor(0);
 		
-			horizAngle  += mouseSpeedo * float(windowWidth/2 - xpos );
-			verticAngle += mouseSpeedo * float( windowHeight/2 - ypos );
+			horizAngle  += mouseSpeedo * float(windowWidth/divideFactor - xpos );
+			verticAngle += mouseSpeedo * float( windowHeight/divideFactor - ypos );
 		}
 
 

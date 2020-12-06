@@ -103,7 +103,7 @@ glm::vec4 surface_color   = glm::vec4(0.7f,0.6f,0.18f,1.0f);
 float     bump_density    = 16.0f;
 float     bump_size		  = 0.15f;
 float     specular_factor = 0.5f;
-
+int		  divideFactor    = 2;
 
 //Plane
 point4		planeVertices[NumVerticesSQ];
@@ -157,6 +157,7 @@ bool			initSDL()
 
 #ifdef __APPLE__
 		gWindow = SDL_CreateWindow("Chapter11", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, windowWidth, windowHeight, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI );
+		divideFactor = 4;
 #else
 		gWindow = SDL_CreateWindow("chapter11", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, windowWidth, windowHeight, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
 #endif
@@ -254,14 +255,14 @@ bool			event_handler(SDL_Event* event)
 			{
 				camera = true;
 				SDL_GetMouseState(&xpos, &ypos);
-				SDL_WarpMouseInWindow(gWindow, windowWidth / 2, windowHeight / 2);
+				SDL_WarpMouseInWindow(gWindow, windowWidth / divideFactor, windowHeight / divideFactor);
 				SDL_ShowCursor(0);
 			}
 			else
 			{
 				camera = false;
 				SDL_GetMouseState(&xpos, &ypos);
-				SDL_WarpMouseInWindow(gWindow, windowWidth / 2, windowHeight / 2);
+				SDL_WarpMouseInWindow(gWindow, windowWidth / divideFactor, windowHeight / divideFactor);
 				SDL_ShowCursor(1);
 			}
 			return true;
@@ -1027,11 +1028,11 @@ int main (int argc,  char * argv[])
 		if(camera == true)
 		{
 			SDL_GetMouseState(&xpos, &ypos);
-			SDL_WarpMouseInWindow(gWindow, windowWidth / 2, windowHeight / 2);
+			SDL_WarpMouseInWindow(gWindow, windowWidth / divideFactor, windowHeight / divideFactor);
 			SDL_ShowCursor(0);
 		
-			horizAngle  += mouseSpeedo * float(windowWidth/2 - xpos );
-			verticAngle += mouseSpeedo * float( windowHeight/2 - ypos );
+			horizAngle  += mouseSpeedo * float(windowWidth/divideFactor - xpos );
+			verticAngle += mouseSpeedo * float( windowHeight/divideFactor - ypos );
 		}
 		
 

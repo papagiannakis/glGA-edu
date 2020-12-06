@@ -99,6 +99,7 @@ float zNear;
 float zFar;
 float FOV;
 float initialFoV = 45.0f;
+int divideFactor = 2;
 
 float m10 = -15.0f,m101 = -15.0f;
 int go2 = 0;
@@ -152,9 +153,10 @@ bool			initSDL()
 		SDL_GetCurrentDisplayMode(0, &current);
 
 #ifdef __APPLE__
-		gWindow = SDL_CreateWindow("Chapter15", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, windowWidth, windowHeight, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI );
+		gWindow = SDL_CreateWindow("Chapter16", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, windowWidth, windowHeight, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI );
+		divideFactor = 4;
 #else
-		gWindow = SDL_CreateWindow("Chapter15", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, windowWidth, windowHeight, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);		
+		gWindow = SDL_CreateWindow("Chapter16", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, windowWidth, windowHeight, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);		
 #endif		
 		if (gWindow == NULL)
 		{
@@ -249,14 +251,14 @@ bool			event_handler(SDL_Event* event)
 			{
 				camera = true;
 				SDL_GetMouseState(&xpos, &ypos);
-				SDL_WarpMouseInWindow(gWindow, windowWidth / 2, windowHeight / 2);
+				SDL_WarpMouseInWindow(gWindow, windowWidth / divideFactor, windowHeight / divideFactor);
 				SDL_ShowCursor(0);
 			}
 			else
 			{
 				camera = false;
 				SDL_GetMouseState(&xpos, &ypos);
-				SDL_WarpMouseInWindow(gWindow, windowWidth / 2, windowHeight / 2);
+				SDL_WarpMouseInWindow(gWindow, windowWidth / divideFactor, windowHeight / divideFactor);
 				SDL_ShowCursor(1);
 			}
 			return true;
@@ -1016,10 +1018,10 @@ int main (int argc, char * argv[])
 		if(camera == true)
 		{
 			SDL_GetMouseState(&xpos, &ypos);
-			SDL_WarpMouseInWindow(gWindow, windowWidth / 2, windowHeight / 2);
+			SDL_WarpMouseInWindow(gWindow, windowWidth / divideFactor, windowHeight / divideFactor);
 		
-			horizAngle  += mouseSpeedo * float(windowWidth/2 - xpos );
-			verticAngle += mouseSpeedo * float( windowHeight/2 - ypos );
+			horizAngle  += mouseSpeedo * float(windowWidth/divideFactor - xpos );
+			verticAngle += mouseSpeedo * float( windowHeight/divideFactor - ypos );
 		}
 
 
