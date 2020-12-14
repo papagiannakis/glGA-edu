@@ -29,12 +29,12 @@ glGA full description can be found in [glga homepage](http://george.papagiannaki
 
 *Hardware Requirements*: OpenGL 3.2 and up
 
-1. Clone this repo locally and pull LFS content. You can follow [these instructions](https://github.com/papagiannakis/glGA-5.0/wiki/How-to-get-glGA5.0-through-GitHub) if you are not sure how to do it. Make sure you are on the **dev** branch. 
-1. Follow the basic installation instructions in the wiki, depending on your OS: [Windows](https://github.com/papagiannakis/glGA-5.0/wiki/Basic-Windows-Installation-Instructions), [Mac](https://github.com/papagiannakis/glGA-5.0/wiki/Basic-Mac-Installation-Instruction) or [Linux](https://github.com/papagiannakis/glGA-5.0/wiki/Basic-Linux-Installation-Instructions). 
-2. Download and setup Visual Studio to build and run each project. Instructions to do so are found [here](https://github.com/papagiannakis/glGA-5.0/wiki/Basic-Visual-Studio-Code-usage-for-all-OS).
+1. Clone this repo locally and pull LFS content. You can follow [these instructions](https://github.com/papagiannakis/glGA-edu/wiki/How-to-get-glGA5.0-through-GitHub) if you are not sure how to do it. Make sure you are on the **dev** branch. 
+1. Follow the basic installation instructions in the wiki, depending on your OS: [Windows](https://github.com/papagiannakis/glGA-edu/wiki/Basic-Windows-Installation-Instructions), [Mac](https://github.com/papagiannakis/glGA-edu/wiki/Basic-Mac-Installation-Instruction) or [Linux](https://github.com/papagiannakis/glGA-edu/wiki/Basic-Linux-Installation-Instructions). 
+2. Download and setup Visual Studio to build and run each project. Instructions to do so are found [here](https://github.com/papagiannakis/glGA-edu/wiki/Basic-Visual-Studio-Code-usage-for-all-OS).
 
 
-*The usage of Visual Studio Code is strongly encouraged against any other method.* For other build and run methods, you may find information [here](https://github.com/papagiannakis/glGA-5.0/wiki/Older-Installation-Instructions-for-all-OS).
+*The usage of Visual Studio Code is strongly encouraged against any other method.* For other build and run methods, you may find information [here](https://github.com/papagiannakis/glGA-edu/wiki/Older-Installation-Instructions-for-all-OS).
 
 
 
