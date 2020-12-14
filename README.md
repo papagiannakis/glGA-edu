@@ -109,7 +109,7 @@ glGA libraries and provided examples
 
 -----------------------------------------------------------------------------
 
-##How to extend glga
+## How to extend glga
 
 Any new functionality you bring to glGA has to be in the form of a static library that all other users can use and a simple, thin application layer that illustrates its usage. e.g.:
 
