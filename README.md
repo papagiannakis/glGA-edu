@@ -87,7 +87,8 @@ glGA libraries and provided examples
 7. basicCubeGUI - previous 3D cube with an AntTweakBar GUI
 
 
-#### OpenGL Shading Language, Third Edition: https://wiki.labomedia.org/images/1/10/Orange_Book_-_OpenGL_Shading_Language_2nd_Edition.pdf 
+#### OpenGL Shading Language, Third Edition 
+[Download the book here](https://wiki.labomedia.org/images/1/10/Orange_Book_-_OpenGL_Shading_Language_2nd_Edition.pdf) 
 * Chapter9:  Fog simulation
 * Chapter10: Reflection from a shiny surface
 * Chapter11: Bump mapping
