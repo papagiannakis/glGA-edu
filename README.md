@@ -118,7 +118,7 @@ Any new functionality you bring to glGA has to be in the form of a static librar
 
 Any third party libraries you are using place them under the _thirdPartyLibs(binaries) and _thirdPartyLibsSrc(src code).
 
-
+You may check some extra libraries and content in [this wiki page](https://github.com/papagiannakis/glGA-edu/wiki/Extra-3rd-party-libraries-and-content,-3D-content-creation).
 
 
 
